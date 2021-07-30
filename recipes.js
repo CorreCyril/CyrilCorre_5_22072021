@@ -1757,8 +1757,15 @@ for(i=0; i<50; i++) {
     insertmenu.appendChild(insertingredients);
 
     for(j=0; j<3; j++) {
-        var ingredientstxt = document.createTextNode (recipe[i].ingredients[j].ingredient);
+        var ingredientstxt = document.createTextNode (recipe[i].ingredients[j].ingredient + ": ");
+        var ingredientsquantity = document.createTextNode (recipe[i].ingredients[j].quantity);
+        var ingredientsunit = document.createTextNode (recipe[i].ingredients[j].unit);
+        var insertline = document.createElement ("br");
+
         insertingredients.appendChild(ingredientstxt);
+        insertingredients.appendChild(ingredientsquantity);
+        insertingredients.appendChild(ingredientsunit);
+        insertingredients.appendChild(insertline);
         
     }
     card.appendChild(insertdiv);
