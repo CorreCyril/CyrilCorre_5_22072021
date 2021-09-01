@@ -40,14 +40,30 @@ main {
 #filter {
   display: flex;
   width: 90%;
-  height: 100px;
-  align-items: center;
 }
 .box {
   width: 15%;
   height: 69px;
   margin-right: 2%;
   border-radius: 5px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  color: white;
+  font-size: 20px;
+  font-weight: 500;
+}
+.research {
+  width: 40%;
+  margin-right: 2%;
+  border-radius: 5px;
+  display: none;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  color: white;
+  font-size: 10px;
+  font-weight: 500;
 }
 .blue {
   background-color: #3282F7;
@@ -57,6 +73,18 @@ main {
 }
 .red {
   background-color: #ED6454;
+}
+.Res--Title {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+}
+.Divs {
+  display: flex;
+  width: 90%;
+}
+.Div {
+  width: 33%;
 }
 #card {
   width: 94%;
@@ -90,9 +118,6 @@ main {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 0;
-}
-.card--name {
-
 }
 .card--atname {
   font-size: 17px;
@@ -129,4 +154,7 @@ span {
 .card--meth {
   width: 50%;
   margin-top: 0;
+}
+.insertP {
+  cursor: pointer;
 }

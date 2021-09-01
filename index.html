@@ -23,20 +23,43 @@
     <nav>
       <div id="search">
         <input id="search--text" autocomplete="off" name="search--text"  type="text" placeholder="Rechercher un ingrédient, appareil, ustensiles ou une recette" />
-        <button class="icon" onclick="research()"><i class="fas fa-search fa-2x"></i></button>
+        <button class="icon" id="search--button"><i class="fas fa-search fa-2x"></i></button>
       </div>
     </nav>
 
     <main>
       <div id="filter">
         <div class="box blue">
-
+          
         </div>
-        <div class="box green">
-
+        <div class="box green" id="green">
+          <div>
+            Appareil
+          </div>
+          <div id="Appdown">
+            <i class="fas fa-chevron-down"></i>
+          </div>
+        </div>
+        <div class="research green" id="resgreen">
+          <div class="Res--Title">
+            <div>
+              <input id="InputApp" autocomplete="off" name="search--App"  type="text" placeholder="Recherche un appareil" />
+            </div>
+            <div id="Appup">
+              <i class="fas fa-chevron-up"></i>
+            </div>
+          </div>
+          <div class="Divs">
+            <div id="App1" class="Div">
+            </div>
+            <div id="App2" class="Div">
+            </div>
+            <div id="App3" class="Div">
+            </div>
+          </div>  
         </div>
         <div class="box red">
-
+          
         </div>
       </div>
       <div id="card">
