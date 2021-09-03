@@ -5,7 +5,7 @@ const searchButton = document.getElementById("search--button");
 
 var recetteTrouvee = [];
 
-searchButton.addEventListener("click", function(event) {
+searchButton.addEventListener("click", function() {
     var text = searchBar.value;
     recherche(text);
   });
@@ -129,37 +129,73 @@ function afficherLesRecettes(recipes)
     }
     card.appendChild(insertdiv);
   }
-}
-var ListApp = [];
-for(var i=0; i<recipes.length; i++) {
-    ListApp.push(recipes[i].appliance);
 };
-var FilterApp = ListApp.filter(function(ele , pos){
-        return ListApp.indexOf(ele) == pos;
-});
-
 Appdown.addEventListener("click", function() {
     green.style.display = "none";
     resgreen.style.display = "flex";
+    researchApp();
 });
 Appup.addEventListener("click", function() {
     green.style.display = "flex";
     resgreen.style.display = "none";
 });
-var j=0;
-function increment() {
-    j++;
-}
-for(var i=0; i<FilterApp.length; i++) {
-  increment();
-  var insertP = document.createElement("P");
-  insertP.classList = "insertP";
-  insertP.id= "P"+i;
-  if (j==4) {
-    j=1;
+
+
+function researchApp() {
+  for(var i=1; i<4; i++) {
+    var element = document.getElementById("App"+i);
+    while (element.firstChild) {
+    element.removeChild(element.firstChild);
+    }
   }
-  var App = document.createTextNode (FilterApp[i]);
-  var IdApp = document.getElementById("App"+j);
-  IdApp.appendChild(insertP);
-  insertP.appendChild(App);
+  ListApp = [];
+  TabApp = [];
+  var inputapp = document.getElementById("InputApp");
+  var valueapp = inputapp.value;
+  for(var i=0; i<recipes.length; i++) {
+    ListApp.push(recipes[i].appliance);
+  };
+  var FilterApp = ListApp.filter(function(ele , pos){
+  return ListApp.indexOf(ele) == pos;
+  });
+  var j=0;
+  
+  function increment() {
+    j++;
+  }
+  for(var i=0; i<FilterApp.length; i++) {
+    
+    if (FilterApp[i].includes(valueapp)) {
+      
+      TabApp.push(FilterApp[i]);
+    }
+  };
+  for(var i=0; i<TabApp.length; i++) {
+    increment();
+    var insertP = document.createElement("P");
+    insertP.classList = "insertP";
+    insertP.id= "P"+i;
+    if (j==4) {
+      j=1;
+    };
+    var App = document.createTextNode (TabApp[i]);
+    var IdApp = document.getElementById("App"+j);
+    IdApp.appendChild(insertP);
+    insertP.appendChild(App);
+    document.getElementById("P"+i).onclick = reply_click;
+  };
 };
+InputApp.addEventListener("keyup", function() {
+  researchApp();
+});
+var reply_click = function() {
+  filterbox.style.display = "flex";
+  var IdFilter = document.getElementById(this.id);
+  var insertfilter = document.createElement ("div");
+  insertfilter.classList = "filter--class green";
+  var filtertxt = document.createTextNode (IdFilter.innerHTML);
+  filterbox.appendChild(insertfilter);
+  insertfilter.appendChild(filtertxt);
+
+  
+}
