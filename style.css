@@ -12,8 +12,9 @@ nav {
   height: 100px;
 }
 #search {
-  height: 69px;
-  width: 90%;
+  height: 40px;
+  width: 88%;
+  padding: 1%;
   background-color: #E7E7E7;
   display: flex;
   justify-content: space-between;
@@ -23,7 +24,8 @@ nav {
 #search--text {
   width: 600px;
   background-color: transparent;
-  border: 0;
+  border: none;
+  outline: none;
 }
 .icon {
   background-color: transparent;
@@ -37,23 +39,41 @@ main {
   align-items: center;
   flex-direction: column;
 }
+#filterline {
+  display: none;
+  justify-content: center;
+  width: 100%;
+}
+#filterbox {
+  display: flex;
+  justify-content: flex-start;
+  width: 92%;
+}
+.filter--class {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 150px;
+  height: 50px;
+  border-radius: 5px;
+  margin: 1%;
+  color: white;
+}
 #filter {
   display: flex;
   width: 90%;
 }
-#filterbox {
-  display: none;
-  
-  justify-content: flex-start;
-}
-.filter--class {
-  width: 100px;
-  height: 50px;
-  border-radius: 5px;
-  margin: 10px;
+#InputApp::-webkit-input-placeholder {
+  color: white !important;
+  }
+#InputApp {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: white;
 }
 .box {
-  width: 15%;
+  width: 150px;
   height: 69px;
   margin-right: 2%;
   border-radius: 5px;
@@ -65,7 +85,7 @@ main {
   font-weight: 500;
 }
 .research {
-  width: 40%;
+  width: 400px;
   margin-right: 2%;
   border-radius: 5px;
   display: none;
@@ -73,8 +93,9 @@ main {
   justify-content: space-around;
   align-items: center;
   color: white;
-  font-size: 10px;
+  font-size: 14px;
   font-weight: 500;
+  padding-top: 10px;
 }
 .blue {
   background-color: #3282F7;
