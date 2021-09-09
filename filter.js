@@ -195,6 +195,9 @@ InputApp.addEventListener("keyup", function() {
   researchApp();
 });
 TabFilter = [];
+recetteApp = [];
+TabAppFilter = [];
+
 var reply_click = function() {
   filterline.style.display = "flex";
   var IdFilter = document.getElementById(this.id);
@@ -220,25 +223,35 @@ var reply_click = function() {
     filterbox.appendChild(insertfilter);
     var IdCross = document.getElementById("cross" + k);
     var IdFilterApp = document.getElementById("insfilt" + k);
-    var IdDivFilterApp = document.getElementById("IdinsfiltApp" + k);
+    console.log(TabFilter);
     IdCross.addEventListener("click", function() {
-    IdFilter.parentNode.removeChild(IdFilter);
     IdFilterApp.style.display = "none";
     var IndexTabFilter = TabFilter.indexOf(insertfilterApp.innerHTML);
+    
     TabFilter.splice(IndexTabFilter, 1);
-    console.log(TabFilter);
-    });
-    k++;
-  }
-  var TxtApp = IdDivFilterApp.innerHTML;
-  recetteApp = [];
-  for(var i=0; i<recipes.length; i++) {
-    var recetteAppliance = recipes[i].appliance;
+    researchrecipes();
+    console.log(recetteApp);
 
-    if(recetteAppliance.includes(TxtApp)) {
-      recetteApp.push(recipes[i]);
-    }
-  };
-  console.log(recetteApp);
-  afficherLesRecettes(recetteApp);
+    
+    
+    });
+    
+    k++;
+
+  }
+  function researchrecipes() {
+    for(var i=0; i<recipes.length; i++) {
+
+      var recetteAppliance = recipes[i].appliance;
+      function IncludeApp(Txt) {
+        return recetteAppliance.includes(Txt);
+      };
+      if(TabFilter.every(IncludeApp)) {
+        recetteApp.push(recipes[i]);
+      }
+    };
+    afficherLesRecettes(recetteApp);
+    recetteApp = [];
+  }
+  researchrecipes();
 };
