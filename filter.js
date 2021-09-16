@@ -6,14 +6,14 @@ const searchButton = document.getElementById("search--button");
 var recetteTrouvee = [];
 
 searchButton.addEventListener("click", function() {
-    var text = searchBar.value;
-    recherche(text);
-  });
+  var text = searchBar.value;
+  recherche(text);
+});
   
-  searchBar.addEventListener("change", function(event) {
-    var text = event.target.value;
-    recherche(text);
-  });
+searchBar.addEventListener("change", function(event) {
+  var text = event.target.value;
+  recherche(text);
+});
 
 function recherche(text) {
   recetteTrouvee = [];
