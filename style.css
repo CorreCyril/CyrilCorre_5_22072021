@@ -63,10 +63,28 @@ main {
   display: flex;
   width: 90%;
 }
+#InputIng::-webkit-input-placeholder {
+  color: white !important;
+}
 #InputApp::-webkit-input-placeholder {
   color: white !important;
-  }
+}
+#InputUst::-webkit-input-placeholder {
+  color: white !important;
+}
+#InputIng {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: white;
+}
 #InputApp {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: white;
+}
+#InputUst {
   background-color: transparent;
   border: none;
   outline: none;

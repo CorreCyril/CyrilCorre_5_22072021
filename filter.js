@@ -18,30 +18,35 @@ searchButton.addEventListener("click", function() {
 function recherche(text) {
   recetteTrouvee = [];
   for(var i=0; i<recipes.length; i++) {
-    var entrance = text;
-    var title = recipes[i].name;
+    var entrance = text.toLowerCase();
+    var title = recipes[i].name.toLowerCase();
+    var appliance = recipes[i].appliance.toLowerCase();
     for(var j=0; j < recipes[i].ingredients.length; j++) {
-        var ing = recipes[i].ingredients[j].ingredient;
+      var ing = recipes[i].ingredients[j].ingredient.toLowerCase();
+      if(ing.includes(entrance) && recetteTrouvee.every(VerifRecipe) == true) {
+        recetteTrouvee.push(recipes[i]);
       }
-      
-      var appliance = recipes[i].appliance;
-      
-    
-      for(var k=0; k < recipes[i].ustensils.length; k++) {
-        var ust = recipes[i].ustensils[k];
+    }
+    for(var k=0; k < recipes[i].ustensils.length; k++) {
+      var ust = recipes[i].ustensils[k].toLowerCase();
+      if(ust.includes(entrance) && recetteTrouvee.every(VerifRecipe) == true) {
+        recetteTrouvee.push(recipes[i]);
       }
-    if(title.includes(entrance) || ing.includes(entrance) || appliance.includes(entrance) || ust.includes(entrance)) {
+    }
+    if(title.includes(entrance) && recetteTrouvee.every(VerifRecipe) == true || appliance.includes(entrance) && recetteTrouvee.every(VerifRecipe) == true) {
       recetteTrouvee.push(recipes[i]);
-      
     }
   }
+  function VerifRecipe (element) {
+    return element != recipes[i]; 
+  };
+  
   afficherLesRecettes(recetteTrouvee);
 }
 
 
 function afficherLesRecettes(recipes) 
 {
-  console.log(recipes);
   var card = document.getElementById("card");
   card.innerHTML = "";
   for(var i=0; i<recipes.length; i++) {
@@ -84,7 +89,7 @@ function afficherLesRecettes(recipes)
       var ingredientstxt = document.createTextNode (recipes[i].ingredients[j].ingredient);
       var ingredientstxt1 = document.createTextNode (recipes[i].ingredients[j].ingredient + ": ");
       var insertspan = document.createElement ("span");
-      var ingredientsquantity = document.createTextNode ((recipes[i].ingredients[j].quantity));
+      var ingredientsquantity = document.createTextNode ((recipes[i].ingredients[j].quantity + " "));
       var ingredientsquantite = document.createTextNode ((recipes[i].ingredients[j].quantite));
       ingredientslist.appendChild(insertlist);
       if (recipes[i].ingredients[j].quantity==undefined && recipes[i].ingredients[j].quantite==undefined) {
@@ -130,18 +135,104 @@ function afficherLesRecettes(recipes)
     card.appendChild(insertdiv);
   }
 };
+Ingdown.addEventListener("click", function() {
+  blue.style.display = "none";
+  resblue.style.display = "flex";
+  green.style.display = "flex";
+  resgreen.style.display = "none";
+  red.style.display = "flex";
+  resred.style.display = "none";
+  researchIng();
+});
+Ingup.addEventListener("click", function() {
+  blue.style.display = "flex";
+  resblue.style.display = "none";
+});
 Appdown.addEventListener("click", function() {
     green.style.display = "none";
     resgreen.style.display = "flex";
+    blue.style.display = "flex";
+    resblue.style.display = "none";
+    red.style.display = "flex";
+    resred.style.display = "none";
     researchApp();
 });
 Appup.addEventListener("click", function() {
     green.style.display = "flex";
     resgreen.style.display = "none";
 });
-
+Ustdown.addEventListener("click", function() {
+  red.style.display = "none";
+  resred.style.display = "flex";
+  green.style.display = "flex";
+  resgreen.style.display = "none";
+  blue.style.display = "flex";
+  resblue.style.display = "none";
+  researchUst();
+});
+Ustup.addEventListener("click", function() {
+  red.style.display = "flex";
+  resred.style.display = "none";
+});
 var k = 0;
+var l = 0;
+var m = 0;
+function researchIng() {
+  for(var i=1; i<4; i++) {
 
+    var element = document.getElementById("Ing"+i);
+    while (element.firstChild) {
+    element.removeChild(element.firstChild);
+    }
+  }
+  ListIng = [];
+  TabIng = [];
+  var inputing = document.getElementById("InputIng");
+  var valueing = inputing.value;
+
+  for(var i=0; i<recipes.length; i++) {
+    for(var j=0; j < recipes[i].ingredients.length; j++) {
+      var ListIngrédients = recipes[i].ingredients[j].ingredient;
+      replacecreme = ListIngrédients.replace("Crème fraiche", "Crème fraîche");
+      replaceLait = replacecreme.replace("Lait de Coco", "Lait de coco");
+      replaceCoulis = replaceLait.replace("Coulis de tomate", "Coulis de tomates");
+      replaceTomates = replaceCoulis.replace("Coulis de tomatess", "Coulis de tomates");
+      ListIng.push(replaceTomates);
+    }
+  };
+  var FilterIng = ListIng.filter(function(ele , pos){
+  return ListIng.indexOf(ele) == pos;
+  });
+  var j=0;
+  
+  function increment() {
+    j++;
+  }
+  for(var i=0; i<FilterIng.length; i++) {
+    
+    if (FilterIng[i].includes(valueing)) {
+      
+      TabIng.push(FilterIng[i]);
+    }
+  };
+  for(var i=0; i<TabIng.length; i++) {
+    increment();
+    var insertP = document.createElement("P");
+    insertP.classList = "insertP";
+    insertP.id= "PIng"+i;
+    if (j==4) {
+      j=1;
+    };
+    var Ing = document.createTextNode (TabIng[i]);
+    var IdIng = document.getElementById("Ing"+j);
+    IdIng.appendChild(insertP);
+    insertP.appendChild(Ing);
+    document.getElementById("PIng"+i).onclick = reply_click_ing;
+  };
+};
+InputIng.addEventListener("keyup", function() {
+  researchIng();
+});
 function researchApp() {
   for(var i=1; i<4; i++) {
 
@@ -188,70 +279,234 @@ function researchApp() {
     var IdApp = document.getElementById("App"+j);
     IdApp.appendChild(insertP);
     insertP.appendChild(App);
-    document.getElementById("P"+i).onclick = reply_click;
+    document.getElementById("P"+i).onclick = reply_click_app;
   };
 };
 InputApp.addEventListener("keyup", function() {
   researchApp();
 });
-TabFilter = [];
-recetteApp = [];
-TabAppFilter = [];
+function researchUst() {
+  for(var i=1; i<4; i++) {
 
-var reply_click = function() {
-  filterline.style.display = "flex";
-  var IdFilter = document.getElementById(this.id);
-  var insertfilter = document.createElement ("div");
-  insertfilter.classList = "filter--class green";
-  var insertfilterApp = document.createElement ("div");
-  insertfilter.appendChild(insertfilterApp);
-  var filtertxt = document.createTextNode (IdFilter.innerHTML);
-  insertfilterApp.appendChild(filtertxt);
-  var logcross = document.createElement ("i");
-  logcross.classList = "far fa-times-circle";
-  insertfilter.appendChild(logcross);
-  function VerifApp(element) {
-    return element != insertfilterApp.innerHTML;
-  };
-  if (TabFilter.length == 0 || TabFilter.every(VerifApp) == true) {
-    
-    logcross.id = "cross" + k;
-    insertfilter.id = "insfilt" + k;
-    insertfilterApp.id = "IdinsfiltApp" + k;
-
-    TabFilter.push(insertfilterApp.innerHTML);
-    filterbox.appendChild(insertfilter);
-    var IdCross = document.getElementById("cross" + k);
-    var IdFilterApp = document.getElementById("insfilt" + k);
-    console.log(TabFilter);
-    IdCross.addEventListener("click", function() {
-    IdFilterApp.style.display = "none";
-    var IndexTabFilter = TabFilter.indexOf(insertfilterApp.innerHTML);
-    
-    TabFilter.splice(IndexTabFilter, 1);
-    researchrecipes();
-    console.log(recetteApp);
-
-    
-    
-    });
-    
-    k++;
-
+    var element = document.getElementById("Ust"+i);
+    while (element.firstChild) {
+    element.removeChild(element.firstChild);
+    }
   }
-  function researchrecipes() {
-    for(var i=0; i<recipes.length; i++) {
+  ListUst = [];
+  TabUst = [];
+  var inputust = document.getElementById("InputUst");
+  var valueust = inputust.value;
 
-      var recetteAppliance = recipes[i].appliance;
-      function IncludeApp(Txt) {
-        return recetteAppliance.includes(Txt);
-      };
-      if(TabFilter.every(IncludeApp)) {
-        recetteApp.push(recipes[i]);
-      }
+  for(var i=0; i<recipes.length; i++) {
+    for(var j=0; j<recipes[i].ustensils.length; j++) {
+      var ustensile = recipes[i].ustensils[j];
+      ListUst.push(ustensile);
+    }
+  };
+  var FilterUst = ListUst.filter(function(ele , pos){
+  return ListUst.indexOf(ele) == pos;
+  });
+  var j=0;
+  
+  function increment() {
+    j++;
+  }
+  for(var i=0; i<FilterUst.length; i++) {
+    
+    if (FilterUst[i].includes(valueust)) {
+      
+      TabUst.push(FilterUst[i]);
+    }
+  };
+  for(var i=0; i<TabUst.length; i++) {
+    increment();
+    var insertP = document.createElement("P");
+    insertP.classList = "insertP";
+    insertP.id= "PUst"+i;
+    if (j==4) {
+      j=1;
     };
-    afficherLesRecettes(recetteApp);
-    recetteApp = [];
+    var Ust = document.createTextNode (TabUst[i]);
+    var IdUst = document.getElementById("Ust"+j);
+    IdUst.appendChild(insertP);
+    insertP.appendChild(Ust);
+    document.getElementById("PUst"+i).onclick = reply_click_ust;
+  };
+};
+InputUst.addEventListener("keyup", function() {
+  researchUst();
+});
+TabFilterIng = [];
+TabFilterApp = [];
+TabFilterUst = [];
+recette = [];
+TabRecetteIng = [];
+TabRecetteApp = [];
+TabRecetteUst = [];
+
+var reply_click_ing = function() {
+  filterline.style.display = "flex";
+  var IdFilterIng = document.getElementById(this.id);
+  var insertfilterIng = document.createElement ("div");
+  insertfilterIng.classList = "filter--class blue";
+  var insertfilterIngrédient = document.createElement ("div");
+  var filtertxting = document.createTextNode (IdFilterIng.innerHTML);
+  insertfilterIng.appendChild(insertfilterIngrédient);
+  insertfilterIngrédient.appendChild(filtertxting);
+  var logcrossIng = document.createElement ("i");
+  logcrossIng.classList = "far fa-times-circle";
+  insertfilterIng.appendChild(logcrossIng);
+  function VerifIng (element) {
+    return element != insertfilterIngrédient.innerHTML; 
+  };
+  if (TabFilterIng.length == 0 || TabFilterIng.every(VerifIng) == true) {
+    logcrossIng.id = "crossIng" + l;
+    insertfilterIng.id = "insfiltIng" + l;
+    TabFilterIng.push(insertfilterIngrédient.innerHTML);
+    filterbox.appendChild(insertfilterIng);
+    var IdCrossIng = document.getElementById("crossIng" + l);
+    var IdFilterIng = document.getElementById("insfiltIng" + l);
+    IdCrossIng.addEventListener("click", function() {
+      IdFilterIng.style.display = "none";
+      var IndexTabFilterIng = TabFilterIng.indexOf(insertfilterIngrédient.innerHTML);
+      TabFilterIng.splice(IndexTabFilterIng, 1);
+      researchrecipes();
+    });
+    l++;
   }
   researchrecipes();
 };
+var reply_click_ust = function() {
+  filterline.style.display = "flex";
+  var IdFilterUst = document.getElementById(this.id);
+  var insertfilterUst = document.createElement ("div");
+  insertfilterUst.classList = "filter--class red";
+  var insertfilterustensil = document.createElement ("div");
+  insertfilterUst.appendChild(insertfilterustensil);
+  var logcrossUst = document.createElement ("i");
+  logcrossUst.classList = "far fa-times-circle";
+  var filtertxtUst = document.createTextNode (IdFilterUst.innerHTML);
+  insertfilterustensil.appendChild(filtertxtUst);
+  insertfilterUst.appendChild(logcrossUst);
+
+  function VerifUst(element) {
+    return element != insertfilterustensil.innerHTML; 
+  };
+  if (TabFilterUst.length == 0 || TabFilterUst.every(VerifUst) == true) {
+    logcrossUst.id = "crossUst" + m;
+    insertfilterUst.id = "insfiltUst" + m;
+    TabFilterUst.push(insertfilterustensil.innerHTML);
+    filterbox.appendChild(insertfilterUst);
+    var IdCrossUst = document.getElementById("crossUst" + m);
+    var IdFilterUst = document.getElementById("insfiltUst" + m);
+    IdCrossUst.addEventListener("click", function() {
+      IdFilterUst.style.display = "none";
+      var IndexTabFilterUst = TabFilterUst.indexOf(insertfilterustensil.innerHTML);
+      TabFilterUst.splice(IndexTabFilterUst, 1);
+      researchrecipes();
+    });
+    m++;
+  }
+  researchrecipes();
+};
+var reply_click_app = function() {
+  filterline.style.display = "flex";
+  var IdFilterApp = document.getElementById(this.id);
+  var insertfilterApp = document.createElement ("div");
+  insertfilterApp.classList = "filter--class green";
+  var insertfilterAppliance = document.createElement ("div");
+  insertfilterApp.appendChild(insertfilterAppliance);
+  var logcrossApp = document.createElement ("i");
+  logcrossApp.classList = "far fa-times-circle";
+  var filtertxtApp = document.createTextNode (IdFilterApp.innerHTML);
+  insertfilterAppliance.appendChild(filtertxtApp);
+  insertfilterApp.appendChild(logcrossApp);
+
+  function VerifApp(element) {
+    return element != insertfilterApp.innerHTML; 
+  };
+  if (TabFilterApp.length == 0 || TabFilterApp.every(VerifApp) == true) {
+    logcrossApp.id = "crossApp" + k;
+    insertfilterApp.id = "insfiltApp" + k;
+    TabFilterApp.push(insertfilterAppliance.innerHTML);
+    filterbox.appendChild(insertfilterApp);
+    var IdCrossApp = document.getElementById("crossApp" + k);
+    var IdFilterApp = document.getElementById("insfiltApp" + k);
+    IdCrossApp.addEventListener("click", function() {
+      IdFilterApp.style.display = "none";
+      var IndexTabFilterApp = TabFilterApp.indexOf(insertfilterApp.innerHTML);
+      TabFilterApp.splice(IndexTabFilterApp, 1);
+      researchrecipes();
+    });
+    k++;
+  }
+  researchrecipes();
+};
+function researchrecipes() {
+  for(var i=0; i<recipes.length; i++) {
+    var recetteApp = recipes[i].appliance;
+    for(var j=0; j < recipes[i].ingredients.length; j++) {
+     var recetteIng = recipes[i].ingredients[j].ingredient;
+     if(TabFilterIng.length > 0 && TabFilterIng.every(CheckIng)) {
+        TabRecetteIng.push(recipes[i]);
+      };
+    };
+    for(var k=0; k < recipes[i].ustensils.length; k++) {
+      var recetteUst = recipes[i].ustensils[k];
+      if(TabFilterUst.length > 0 && TabFilterUst.every(CheckUst)) {
+         TabRecetteUst.push(recipes[i]);
+       };
+     };
+    if(TabFilterApp.length > 0 && TabFilterApp.every(CheckApp)) {
+      TabRecetteApp.push(recipes[i])
+    };
+  };
+  function CheckIng(Ingredient) {
+    return recetteIng.includes(Ingredient);
+  }
+  function CheckApp(Appareil) {
+    return recetteApp.includes(Appareil);
+  }
+  function CheckUst(Ustensile) {
+    return recetteUst.includes(Ustensile);
+  }
+  if(TabRecetteApp.length == 0) {
+    var TabRecette = TabRecetteIng.filter(ReCheck);
+  }
+  else if(TabRecetteIng.length == 0) {
+    var TabRecette = TabRecetteApp.filter(ReCheck);
+  }
+  else if(TabRecetteUst.length == 0) {
+    var TabRecette = TabRecetteIng.filter(Check);
+  }
+  else {
+    var TabRecetteCheck = TabRecetteIng.filter(Check);
+    var TabRecette = TabRecetteCheck.filter(ReCheck);
+  }
+  function Check(e) {
+    return TabRecetteApp.includes(e);
+  }
+  function ReCheck(e) {
+    return TabRecetteUst.includes(e);
+  }
+  if (TabRecetteIng.length == 0 && TabRecetteApp.length == 0 && TabRecetteUst.length == 0) {
+    afficherLesRecettes(recipes);
+  }
+  else if (TabRecetteIng.length == 0 && TabRecetteUst.length == 0 && TabRecetteApp.length > 0) {
+    afficherLesRecettes(TabRecetteApp);
+  }
+  else if (TabRecetteApp.length == 0 && TabRecetteUst.length == 0 && TabRecetteIng.length > 0) {
+    afficherLesRecettes(TabRecetteIng);
+  }
+  else if (TabRecetteApp.length == 0 && TabRecetteIng.length == 0 && TabRecetteUst.length > 0) {
+    afficherLesRecettes(TabRecetteUst);
+  }
+  else {
+    afficherLesRecettes(TabRecette);
+  }
+  TabRecetteIng = [];
+  TabRecetteApp = [];
+  TabRecetteUst = [];
+  TabRecette = [];
+}
