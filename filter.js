@@ -363,7 +363,7 @@ var reply_click_ing = function() {
   if (TabFilterIng.length == 0 || TabFilterIng.every(VerifIng) == true) {
     logcrossIng.id = "crossIng" + l;
     insertfilterIng.id = "insfiltIng" + l;
-    TabFilterIng.push(insertfilterIngrédient.innerHTML);
+    TabFilterIng.push(insertfilterIngrédient.innerHTML.toLowerCase());
     filterbox.appendChild(insertfilterIng);
     var IdCrossIng = document.getElementById("crossIng" + l);
     var IdFilterIng = document.getElementById("insfiltIng" + l);
@@ -446,24 +446,27 @@ var reply_click_app = function() {
 function researchrecipes() {
   for(var i=0; i<recipes.length; i++) {
     var recetteApp = recipes[i].appliance;
+    var recetteUst = recipes[i].ustensils;
+    NewTabIng = [];
     for(var j=0; j < recipes[i].ingredients.length; j++) {
      var recetteIng = recipes[i].ingredients[j].ingredient;
-     if(TabFilterIng.length > 0 && TabFilterIng.every(CheckIng)) {
-        TabRecetteIng.push(recipes[i]);
-      };
+     NewTabIng.push(recetteIng.toLowerCase());
     };
-    for(var k=0; k < recipes[i].ustensils.length; k++) {
-      var recetteUst = recipes[i].ustensils[k];
-      if(TabFilterUst.length > 0 && TabFilterUst.every(CheckUst)) {
-         TabRecetteUst.push(recipes[i]);
-       };
-     };
+    if(TabFilterIng.length > 0 && TabFilterIng.every(CheckIng)) {
+     TabRecetteIng.push(recipes[i]);
+    };
+    if(TabFilterUst.length > 0 && TabFilterUst.every(CheckUst)) {
+      TabRecetteUst.push(recipes[i]);
+    };
     if(TabFilterApp.length > 0 && TabFilterApp.every(CheckApp)) {
       TabRecetteApp.push(recipes[i])
     };
   };
+
+  console.log(TabFilterIng);
+
   function CheckIng(Ingredient) {
-    return recetteIng.includes(Ingredient);
+    return NewTabIng.includes(Ingredient);
   }
   function CheckApp(Appareil) {
     return recetteApp.includes(Appareil);
@@ -490,21 +493,27 @@ function researchrecipes() {
   function ReCheck(e) {
     return TabRecetteUst.includes(e);
   }
-  if (TabRecetteIng.length == 0 && TabRecetteApp.length == 0 && TabRecetteUst.length == 0) {
+  if (TabFilterIng.length == 0 && TabFilterApp.length == 0 && TabFilterUst.length == 0) {
     afficherLesRecettes(recipes);
   }
-  else if (TabRecetteIng.length == 0 && TabRecetteUst.length == 0 && TabRecetteApp.length > 0) {
+
+  
+  else if (TabFilterIng.length == 0 && TabFilterUst.length == 0 && TabFilterApp.length > 0) {
     afficherLesRecettes(TabRecetteApp);
   }
-  else if (TabRecetteApp.length == 0 && TabRecetteUst.length == 0 && TabRecetteIng.length > 0) {
+  else if (TabFilterApp.length == 0 && TabFilterUst.length == 0 && TabFilterIng.length > 0) {
     afficherLesRecettes(TabRecetteIng);
   }
-  else if (TabRecetteApp.length == 0 && TabRecetteIng.length == 0 && TabRecetteUst.length > 0) {
+  else if (TabFilterApp.length == 0 && TabFilterIng.length == 0 && TabFilterUst.length > 0) {
     afficherLesRecettes(TabRecetteUst);
   }
   else {
     afficherLesRecettes(TabRecette);
   }
+  console.log(TabRecetteIng);
+  console.log(TabRecetteApp);
+  console.log(TabRecetteUst);
+  console.log(TabRecette);
   TabRecetteIng = [];
   TabRecetteApp = [];
   TabRecetteUst = [];
