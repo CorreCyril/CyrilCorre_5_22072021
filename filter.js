@@ -1,52 +1,49 @@
-afficherLesRecettes(recipes);
+DisplayRecipes(recipes);
 
 const searchBar = document.getElementById("search--text");
 const searchButton = document.getElementById("search--button");
 
-var recetteTrouvee = [];
+var FindRecipe = [];
 
 searchButton.addEventListener("click", function() {
-    var text = searchBar.value;
-    recherche(text);
-  });
+  var text = searchBar.value;
+  Research(text);
+});
   
-  searchBar.addEventListener("change", function(event) {
-    var text = event.target.value;
-    recherche(text);
-  });
+searchBar.addEventListener("change", function(event) {
+  var text = event.target.value;
+  Research(text);
+});
 
-function recherche(text) {
-  recetteTrouvee = [];
+function Research(text) {
+  FindRecipe = [];
   for(var i=0; i<recipes.length; i++) {
     var entrance = text.toLowerCase();
     var title = recipes[i].name.toLowerCase();
     var appliance = recipes[i].appliance.toLowerCase();
     for(var j=0; j < recipes[i].ingredients.length; j++) {
-      var ing = recipes[i].ingredients[j].ingredient.toLowerCase();
-      if(ing.includes(entrance) && recetteTrouvee.every(VerifRecipe) == true) {
-        recetteTrouvee.push(recipes[i]);
+      var Ingredient = recipes[i].ingredients[j].ingredient.toLowerCase();
+      if(Ingredient.includes(entrance) && FindRecipe.every(VerifRecipe) == true) {
+        FindRecipe.push(recipes[i]);
       }
     }
     for(var k=0; k < recipes[i].ustensils.length; k++) {
-      var ust = recipes[i].ustensils[k].toLowerCase();
-      if(ust.includes(entrance) && recetteTrouvee.every(VerifRecipe) == true) {
-        recetteTrouvee.push(recipes[i]);
+      var Ustensil = recipes[i].ustensils[k].toLowerCase();
+      if(Ustensil.includes(entrance) && FindRecipe.every(VerifRecipe) == true) {
+        FindRecipe.push(recipes[i]);
       }
     }
-    if(title.includes(entrance) && recetteTrouvee.every(VerifRecipe) == true || appliance.includes(entrance) && recetteTrouvee.every(VerifRecipe) == true) {
-      recetteTrouvee.push(recipes[i]);
+    if(title.includes(entrance) && FindRecipe.every(VerifRecipe) == true || appliance.includes(entrance) && FindRecipe.every(VerifRecipe) == true) {
+      FindRecipe.push(recipes[i]);
     }
   }
   function VerifRecipe (element) {
     return element != recipes[i]; 
-  };
-  
-  afficherLesRecettes(recetteTrouvee);
+  }
+  DisplayRecipes(FindRecipe);
 }
 
-
-function afficherLesRecettes(recipes) 
-{
+function DisplayRecipes(recipes) {
   var card = document.getElementById("card");
   card.innerHTML = "";
   for(var i=0; i<recipes.length; i++) {
@@ -65,8 +62,8 @@ function afficherLesRecettes(recipes)
     var atname = document.createElement ("h2");
     atname.classList = "card--atname";
     insertname.appendChild(atname);
-    var tabname = document.createTextNode (recipes[i].name);
-    atname.appendChild(tabname);
+    var Arrayname = document.createTextNode (recipes[i].name);
+    atname.appendChild(Arrayname);
     var inserttime = document.createElement ("div");
     inserttime.classList = "card--time";
     inserttitle.appendChild(inserttime);
@@ -76,8 +73,8 @@ function afficherLesRecettes(recipes)
     var logtime = document.createElement ("i");
     logtime.classList = "far fa-clock fa-md logtime";
     attime.appendChild(logtime);
-    var tabtime = document.createTextNode (recipes[i].time + " min");
-    attime.appendChild(tabtime);
+    var Arraytime = document.createTextNode (recipes[i].time + " min");
+    attime.appendChild(Arraytime);
     var insertingredients = document.createElement ("div");
     insertingredients.classList = "card--ingredients";
     insertmenu.appendChild(insertingredients);
@@ -92,7 +89,7 @@ function afficherLesRecettes(recipes)
       var ingredientsquantity = document.createTextNode ((recipes[i].ingredients[j].quantity + " "));
       var ingredientsquantite = document.createTextNode ((recipes[i].ingredients[j].quantite));
       ingredientslist.appendChild(insertlist);
-      if (recipes[i].ingredients[j].quantity==undefined && recipes[i].ingredients[j].quantite==undefined) {
+      if (recipes[i].ingredients[j].quantity == undefined && recipes[i].ingredients[j].quantite == undefined) {
         insertlist.appendChild(ingredientstxt);
       }
       else {
@@ -109,10 +106,7 @@ function afficherLesRecettes(recipes)
         insertspan.appendChild(ingredientsquantite);
       }
       insertlist.appendChild(insertspan);
-      if (recipes[i].ingredients[j].unit==undefined) {
-      
-      }
-      else {
+      if (recipes[i].ingredients[j].unit != undefined) {
         var unit = recipes[i].ingredients[j].unit;
         var replaceunit = unit.replace("grammes", "g");
         var replaceunit1 = replaceunit.replace("cuillères à soupe", "cuillères");
@@ -134,388 +128,388 @@ function afficherLesRecettes(recipes)
     }
     card.appendChild(insertdiv);
   }
-};
-Ingdown.addEventListener("click", function() {
+}
+
+Ingredientdown.addEventListener("click", function() {
   blue.style.display = "none";
   resblue.style.display = "flex";
   green.style.display = "flex";
   resgreen.style.display = "none";
   red.style.display = "flex";
   resred.style.display = "none";
-  researchIng();
+  researchIngredient();
 });
-Ingup.addEventListener("click", function() {
+
+Ingredientup.addEventListener("click", function() {
   blue.style.display = "flex";
   resblue.style.display = "none";
 });
-Appdown.addEventListener("click", function() {
-    green.style.display = "none";
-    resgreen.style.display = "flex";
-    blue.style.display = "flex";
-    resblue.style.display = "none";
-    red.style.display = "flex";
-    resred.style.display = "none";
-    researchApp();
+
+Appliancedown.addEventListener("click", function() {
+  green.style.display = "none";
+  resgreen.style.display = "flex";
+  blue.style.display = "flex";
+  resblue.style.display = "none";
+  red.style.display = "flex";
+  resred.style.display = "none";
+  researchAppliance();
 });
-Appup.addEventListener("click", function() {
-    green.style.display = "flex";
-    resgreen.style.display = "none";
+
+Applianceup.addEventListener("click", function() {
+  green.style.display = "flex";
+  resgreen.style.display = "none";
 });
-Ustdown.addEventListener("click", function() {
+
+Ustensildown.addEventListener("click", function() {
   red.style.display = "none";
   resred.style.display = "flex";
   green.style.display = "flex";
   resgreen.style.display = "none";
   blue.style.display = "flex";
   resblue.style.display = "none";
-  researchUst();
+  researchUstensil();
 });
-Ustup.addEventListener("click", function() {
+
+Ustensilup.addEventListener("click", function() {
   red.style.display = "flex";
   resred.style.display = "none";
 });
+
 var k = 0;
 var l = 0;
 var m = 0;
-function researchIng() {
-  for(var i=1; i<4; i++) {
 
-    var element = document.getElementById("Ing"+i);
+function researchIngredient() {
+  for(var i=1; i<4; i++) {
+    var element = document.getElementById("Ingredient"+i);
     while (element.firstChild) {
     element.removeChild(element.firstChild);
     }
   }
-  ListIng = [];
-  TabIng = [];
-  var inputing = document.getElementById("InputIng");
-  var valueing = inputing.value;
-
+  ListIngredient = [];
+  ArrayIngredient = [];
+  var inputIngredient = document.getElementById("InputIngredient");
+  var valueIngredient = inputIngredient.value.toLowerCase();
   for(var i=0; i<recipes.length; i++) {
     for(var j=0; j < recipes[i].ingredients.length; j++) {
-      var ListIngrédients = recipes[i].ingredients[j].ingredient;
-      replacecreme = ListIngrédients.replace("Crème fraiche", "Crème fraîche");
+      var ListIngredients = recipes[i].ingredients[j].ingredient;
+      replacecreme = ListIngredients.replace("Crème fraiche", "Crème fraîche");
       replaceLait = replacecreme.replace("Lait de Coco", "Lait de coco");
       replaceCoulis = replaceLait.replace("Coulis de tomate", "Coulis de tomates");
       replaceTomates = replaceCoulis.replace("Coulis de tomatess", "Coulis de tomates");
-      ListIng.push(replaceTomates);
+      ListIngredient.push(replaceTomates);
     }
-  };
-  var FilterIng = ListIng.filter(function(ele , pos){
-  return ListIng.indexOf(ele) == pos;
+  }
+  var FilterIngredient = ListIngredient.filter(function(ele , pos){
+  return ListIngredient.indexOf(ele) == pos;
   });
   var j=0;
-  
   function increment() {
     j++;
   }
-  for(var i=0; i<FilterIng.length; i++) {
-    
-    if (FilterIng[i].includes(valueing)) {
-      
-      TabIng.push(FilterIng[i]);
+  for(var i=0; i<FilterIngredient.length; i++) {
+    if (FilterIngredient[i].toLowerCase().includes(valueIngredient)) {
+      ArrayIngredient.push(FilterIngredient[i]);
     }
-  };
-  for(var i=0; i<TabIng.length; i++) {
+  }
+  for(var i=0; i<ArrayIngredient.length; i++) {
     increment();
     var insertP = document.createElement("P");
     insertP.classList = "insertP";
-    insertP.id= "PIng"+i;
+    insertP.id= "PIngredient"+i;
     if (j==4) {
       j=1;
-    };
-    var Ing = document.createTextNode (TabIng[i]);
-    var IdIng = document.getElementById("Ing"+j);
-    IdIng.appendChild(insertP);
-    insertP.appendChild(Ing);
-    document.getElementById("PIng"+i).onclick = reply_click_ing;
-  };
-};
-InputIng.addEventListener("keyup", function() {
-  researchIng();
-});
-function researchApp() {
-  for(var i=1; i<4; i++) {
+    }
+    var Ingredient = document.createTextNode (ArrayIngredient[i]);
+    var IdIngredient = document.getElementById("Ingredient"+j);
+    IdIngredient.appendChild(insertP);
+    insertP.appendChild(Ingredient);
+    document.getElementById("PIngredient"+i).onclick = reply_click_Ingredient;
+  }
+}
 
-    var element = document.getElementById("App"+i);
+InputIngredient.addEventListener("keyup", function() {
+  researchIngredient();
+});
+
+function researchAppliance() {
+  for(var i=1; i<4; i++) {
+    var element = document.getElementById("Appliance"+i);
     while (element.firstChild) {
     element.removeChild(element.firstChild);
     }
   }
-  ListApp = [];
-  TabApp = [];
-  var inputapp = document.getElementById("InputApp");
-  var valueapp = inputapp.value;
-
+  ListAppliance = [];
+  ArrayAppliance = [];
+  var inputAppliance = document.getElementById("InputAppliance");
+  var valueAppliance = inputAppliance.value.toLowerCase();
   for(var i=0; i<recipes.length; i++) {
     var casserole = recipes[i].appliance;
     replacecasserole = casserole.replace("Casserolle", "Casserole");
     replacecasserole1 = replacecasserole.replace("Casserole.", "Casserole");
-    ListApp.push(replacecasserole1);
-  };
-  var FilterApp = ListApp.filter(function(ele , pos){
-  return ListApp.indexOf(ele) == pos;
+    ListAppliance.push(replacecasserole1);
+  }
+  var FilterAppliance = ListAppliance.filter(function(ele , pos){
+  return ListAppliance.indexOf(ele) == pos;
   });
   var j=0;
-  
   function increment() {
     j++;
   }
-  for(var i=0; i<FilterApp.length; i++) {
-    
-    if (FilterApp[i].includes(valueapp)) {
-      
-      TabApp.push(FilterApp[i]);
+  for(var i=0; i<FilterAppliance.length; i++) {
+    if (FilterAppliance[i].toLowerCase().includes(valueAppliance)) {
+      ArrayAppliance.push(FilterAppliance[i]);
     }
-  };
-  for(var i=0; i<TabApp.length; i++) {
+  }
+  for(var i=0; i<ArrayAppliance.length; i++) {
     increment();
     var insertP = document.createElement("P");
     insertP.classList = "insertP";
     insertP.id= "P"+i;
     if (j==4) {
       j=1;
-    };
-    var App = document.createTextNode (TabApp[i]);
-    var IdApp = document.getElementById("App"+j);
-    IdApp.appendChild(insertP);
-    insertP.appendChild(App);
-    document.getElementById("P"+i).onclick = reply_click_app;
-  };
-};
-InputApp.addEventListener("keyup", function() {
-  researchApp();
-});
-function researchUst() {
-  for(var i=1; i<4; i++) {
+    }
+    var Appliance = document.createTextNode (ArrayAppliance[i]);
+    var IdAppliance = document.getElementById("Appliance"+j);
+    IdAppliance.appendChild(insertP);
+    insertP.appendChild(Appliance);
+    document.getElementById("P"+i).onclick = reply_click_Appliance;
+  }
+}
 
-    var element = document.getElementById("Ust"+i);
+InputAppliance.addEventListener("keyup", function() {
+  researchAppliance();
+});
+
+function researchUstensil() {
+  for(var i=1; i<4; i++) {
+    var element = document.getElementById("Ustensil"+i);
     while (element.firstChild) {
-    element.removeChild(element.firstChild);
+      element.removeChild(element.firstChild);
     }
   }
-  ListUst = [];
-  TabUst = [];
-  var inputust = document.getElementById("InputUst");
-  var valueust = inputust.value;
-
+  ListUstensil = [];
+  ArrayUstensil = [];
+  var inputUstensil = document.getElementById("InputUstensil");
+  var valueUstensil = inputUstensil.value.toLowerCase();
   for(var i=0; i<recipes.length; i++) {
     for(var j=0; j<recipes[i].ustensils.length; j++) {
-      var ustensile = recipes[i].ustensils[j];
-      ListUst.push(ustensile);
+      var ustensil = recipes[i].ustensils[j].toLowerCase();
+      var ustensiluppercase = ustensil.replace(/(^\w{1})|(\s+\w{1})/g, lettre => lettre.toUpperCase());
+      ListUstensil.push(ustensiluppercase);
     }
-  };
-  var FilterUst = ListUst.filter(function(ele , pos){
-  return ListUst.indexOf(ele) == pos;
+  }
+  var FilterUstensil = ListUstensil.filter(function(ele , pos){
+  return ListUstensil.indexOf(ele) == pos;
   });
   var j=0;
-  
   function increment() {
     j++;
   }
-  for(var i=0; i<FilterUst.length; i++) {
-    
-    if (FilterUst[i].includes(valueust)) {
-      
-      TabUst.push(FilterUst[i]);
+  for(var i=0; i<FilterUstensil.length; i++) {
+    if (FilterUstensil[i].toLowerCase().includes(valueUstensil)) {
+      ArrayUstensil.push(FilterUstensil[i]);
     }
-  };
-  for(var i=0; i<TabUst.length; i++) {
+  }
+  for(var i=0; i<ArrayUstensil.length; i++) {
     increment();
     var insertP = document.createElement("P");
     insertP.classList = "insertP";
-    insertP.id= "PUst"+i;
+    insertP.id= "PUstensil"+i;
     if (j==4) {
       j=1;
-    };
-    var Ust = document.createTextNode (TabUst[i]);
-    var IdUst = document.getElementById("Ust"+j);
-    IdUst.appendChild(insertP);
-    insertP.appendChild(Ust);
-    document.getElementById("PUst"+i).onclick = reply_click_ust;
-  };
-};
-InputUst.addEventListener("keyup", function() {
-  researchUst();
-});
-TabFilterIng = [];
-TabFilterApp = [];
-TabFilterUst = [];
-recette = [];
-TabRecetteIng = [];
-TabRecetteApp = [];
-TabRecetteUst = [];
+    }
+    var Ustensil = document.createTextNode (ArrayUstensil[i]);
+    var IdUstensil = document.getElementById("Ustensil"+j);
+    IdUstensil.appendChild(insertP);
+    insertP.appendChild(Ustensil);
+    document.getElementById("PUstensil"+i).onclick = reply_click_Ustensil;
+  }
+}
 
-var reply_click_ing = function() {
+InputUstensil.addEventListener("keyup", function() {
+  researchUstensil();
+});
+
+ArrayFilterIngredient = [];
+ArrayFilterAppliance = [];
+ArrayFilterUstensil = [];
+Recipe = [];
+ArrayRecipeIngredient = [];
+ArrayRecipeAppliance = [];
+ArrayRecipeUstensil = [];
+
+var reply_click_Ingredient = function() {
   filterline.style.display = "flex";
-  var IdFilterIng = document.getElementById(this.id);
-  var insertfilterIng = document.createElement ("div");
-  insertfilterIng.classList = "filter--class blue";
-  var insertfilterIngrédient = document.createElement ("div");
-  var filtertxting = document.createTextNode (IdFilterIng.innerHTML);
-  insertfilterIng.appendChild(insertfilterIngrédient);
-  insertfilterIngrédient.appendChild(filtertxting);
-  var logcrossIng = document.createElement ("i");
-  logcrossIng.classList = "far fa-times-circle";
-  insertfilterIng.appendChild(logcrossIng);
-  function VerifIng (element) {
-    return element != insertfilterIngrédient.innerHTML; 
-  };
-  if (TabFilterIng.length == 0 || TabFilterIng.every(VerifIng) == true) {
-    logcrossIng.id = "crossIng" + l;
-    insertfilterIng.id = "insfiltIng" + l;
-    TabFilterIng.push(insertfilterIngrédient.innerHTML.toLowerCase());
-    filterbox.appendChild(insertfilterIng);
-    var IdCrossIng = document.getElementById("crossIng" + l);
-    var IdFilterIng = document.getElementById("insfiltIng" + l);
-    IdCrossIng.addEventListener("click", function() {
-      IdFilterIng.style.display = "none";
-      var IndexTabFilterIng = TabFilterIng.indexOf(insertfilterIngrédient.innerHTML);
-      TabFilterIng.splice(IndexTabFilterIng, 1);
+  var IdFilterIngredient = document.getElementById(this.id);
+  var insertFilterIngredient = document.createElement ("div");
+  insertFilterIngredient.classList = "filter--class blue";
+  var insertTextIngredient = document.createElement ("div");
+  insertFilterIngredient.appendChild(insertTextIngredient);
+  var logcrossIngredient = document.createElement ("i");
+  logcrossIngredient.classList = "far fa-times-circle";
+  var FilterTextIngredient = document.createTextNode (IdFilterIngredient.innerHTML);
+  insertTextIngredient.appendChild(FilterTextIngredient);
+  insertFilterIngredient.appendChild(logcrossIngredient);
+  function VerifIngredient (element) {
+    return element != insertTextIngredient.innerHTML.toLowerCase(); 
+  }
+  if (ArrayFilterIngredient.length == 0 || ArrayFilterIngredient.every(VerifIngredient) == true) {
+    logcrossIngredient.id = "crossIngredient" + l;
+    insertFilterIngredient.id = "insertfilterIngredient" + l;
+    ArrayFilterIngredient.push(insertTextIngredient.innerHTML.toLowerCase());
+    filterbox.appendChild(insertFilterIngredient);
+    var IdCrossIngredient = document.getElementById("crossIngredient" + l);
+    var IdFilterIngredient = document.getElementById("insertfilterIngredient" + l);
+    IdCrossIngredient.addEventListener("click", function() {
+      IdFilterIngredient.style.display = "none";
+      var IndexArrayFilterIngredient = ArrayFilterIngredient.indexOf(insertTextIngredient.innerHTML.toLowerCase());
+      ArrayFilterIngredient.splice(IndexArrayFilterIngredient, 1);
       researchrecipes();
     });
     l++;
   }
   researchrecipes();
-};
-var reply_click_ust = function() {
-  filterline.style.display = "flex";
-  var IdFilterUst = document.getElementById(this.id);
-  var insertfilterUst = document.createElement ("div");
-  insertfilterUst.classList = "filter--class red";
-  var insertfilterustensil = document.createElement ("div");
-  insertfilterUst.appendChild(insertfilterustensil);
-  var logcrossUst = document.createElement ("i");
-  logcrossUst.classList = "far fa-times-circle";
-  var filtertxtUst = document.createTextNode (IdFilterUst.innerHTML);
-  insertfilterustensil.appendChild(filtertxtUst);
-  insertfilterUst.appendChild(logcrossUst);
+}
 
-  function VerifUst(element) {
-    return element != insertfilterustensil.innerHTML; 
-  };
-  if (TabFilterUst.length == 0 || TabFilterUst.every(VerifUst) == true) {
-    logcrossUst.id = "crossUst" + m;
-    insertfilterUst.id = "insfiltUst" + m;
-    TabFilterUst.push(insertfilterustensil.innerHTML);
-    filterbox.appendChild(insertfilterUst);
-    var IdCrossUst = document.getElementById("crossUst" + m);
-    var IdFilterUst = document.getElementById("insfiltUst" + m);
-    IdCrossUst.addEventListener("click", function() {
-      IdFilterUst.style.display = "none";
-      var IndexTabFilterUst = TabFilterUst.indexOf(insertfilterustensil.innerHTML);
-      TabFilterUst.splice(IndexTabFilterUst, 1);
+var reply_click_Ustensil = function() {
+  filterline.style.display = "flex";
+  var IdFilterUstensil = document.getElementById(this.id);
+  var insertfilterUstensil = document.createElement ("div");
+  insertfilterUstensil.classList = "filter--class red";
+  var insertTextUstensil = document.createElement ("div");
+  insertfilterUstensil.appendChild(insertTextUstensil);
+  var logcrossUstensil = document.createElement ("i");
+  logcrossUstensil.classList = "far fa-times-circle";
+  var FilterTextUstensil = document.createTextNode (IdFilterUstensil.innerHTML);
+  insertTextUstensil.appendChild(FilterTextUstensil);
+  insertfilterUstensil.appendChild(logcrossUstensil);
+  function VerifUstensil(element) {
+    return element != insertTextUstensil.innerHTML.toLowerCase(); 
+  }
+  if (ArrayFilterUstensil.length == 0 || ArrayFilterUstensil.every(VerifUstensil) == true) {
+    logcrossUstensil.id = "crossUstensil" + m;
+    insertfilterUstensil.id = "insertfilterUstensil" + m;
+    ArrayFilterUstensil.push(insertTextUstensil.innerHTML.toLowerCase());
+    filterbox.appendChild(insertfilterUstensil);
+    var IdCrossUstensil = document.getElementById("crossUstensil" + m);
+    var IdFilterUstensil = document.getElementById("insertfilterUstensil" + m);
+    IdCrossUstensil.addEventListener("click", function() {
+      IdFilterUstensil.style.display = "none";
+      var IndexArrayFilterUstensil = ArrayFilterUstensil.indexOf(insertTextUstensil.innerHTML.toLowerCase());
+      ArrayFilterUstensil.splice(IndexArrayFilterUstensil, 1);
       researchrecipes();
     });
     m++;
   }
   researchrecipes();
-};
-var reply_click_app = function() {
-  filterline.style.display = "flex";
-  var IdFilterApp = document.getElementById(this.id);
-  var insertfilterApp = document.createElement ("div");
-  insertfilterApp.classList = "filter--class green";
-  var insertfilterAppliance = document.createElement ("div");
-  insertfilterApp.appendChild(insertfilterAppliance);
-  var logcrossApp = document.createElement ("i");
-  logcrossApp.classList = "far fa-times-circle";
-  var filtertxtApp = document.createTextNode (IdFilterApp.innerHTML);
-  insertfilterAppliance.appendChild(filtertxtApp);
-  insertfilterApp.appendChild(logcrossApp);
+}
 
-  function VerifApp(element) {
-    return element != insertfilterApp.innerHTML; 
-  };
-  if (TabFilterApp.length == 0 || TabFilterApp.every(VerifApp) == true) {
-    logcrossApp.id = "crossApp" + k;
-    insertfilterApp.id = "insfiltApp" + k;
-    TabFilterApp.push(insertfilterAppliance.innerHTML);
-    filterbox.appendChild(insertfilterApp);
-    var IdCrossApp = document.getElementById("crossApp" + k);
-    var IdFilterApp = document.getElementById("insfiltApp" + k);
-    IdCrossApp.addEventListener("click", function() {
-      IdFilterApp.style.display = "none";
-      var IndexTabFilterApp = TabFilterApp.indexOf(insertfilterApp.innerHTML);
-      TabFilterApp.splice(IndexTabFilterApp, 1);
+var reply_click_Appliance = function() {
+  filterline.style.display = "flex";
+  var IdFilterAppliance = document.getElementById(this.id);
+  var insertfilterAppliance = document.createElement ("div");
+  insertfilterAppliance.classList = "filter--class green";
+  var insertTextAppliance = document.createElement ("div");
+  insertfilterAppliance.appendChild(insertTextAppliance);
+  var logcrossAppliance = document.createElement ("i");
+  logcrossAppliance.classList = "far fa-times-circle";
+  var filtertxtAppliance = document.createTextNode (IdFilterAppliance.innerHTML);
+  insertTextAppliance.appendChild(filtertxtAppliance);
+  insertfilterAppliance.appendChild(logcrossAppliance);
+  function VerifAppliance(element) {
+    return element != insertTextAppliance.innerHTML; 
+  }
+  if (ArrayFilterAppliance.length == 0 || ArrayFilterAppliance.every(VerifAppliance) == true) {
+    logcrossAppliance.id = "crossAppliance" + k;
+    insertfilterAppliance.id = "insfiltAppliance" + k;
+    ArrayFilterAppliance.push(insertTextAppliance.innerHTML);
+    filterbox.appendChild(insertfilterAppliance);
+    var IdCrossAppliance = document.getElementById("crossAppliance" + k);
+    var IdFilterAppliance = document.getElementById("insfiltAppliance" + k);
+    IdCrossAppliance.addEventListener("click", function() {
+      IdFilterAppliance.style.display = "none";
+      var IndexArrayFilterAppliance = ArrayFilterAppliance.indexOf(insertTextAppliance.innerHTML);
+      ArrayFilterAppliance.splice(IndexArrayFilterAppliance, 1);
       researchrecipes();
     });
     k++;
   }
   researchrecipes();
-};
+}
+
 function researchrecipes() {
   for(var i=0; i<recipes.length; i++) {
-    var recetteApp = recipes[i].appliance;
-    var recetteUst = recipes[i].ustensils;
-    NewTabIng = [];
+    var RecipeAppliance = recipes[i].appliance;
+    replacecasserole = RecipeAppliance.replace("Casserolle", "Casserole");
+    replacecasserole1 = replacecasserole.replace("Casserole.", "Casserole");
+    var RecipeUstensil = recipes[i].ustensils;
+    NewArrayIngredient = [];
     for(var j=0; j < recipes[i].ingredients.length; j++) {
-     var recetteIng = recipes[i].ingredients[j].ingredient;
-     NewTabIng.push(recetteIng.toLowerCase());
-    };
-    if(TabFilterIng.length > 0 && TabFilterIng.every(CheckIng)) {
-     TabRecetteIng.push(recipes[i]);
-    };
-    if(TabFilterUst.length > 0 && TabFilterUst.every(CheckUst)) {
-      TabRecetteUst.push(recipes[i]);
-    };
-    if(TabFilterApp.length > 0 && TabFilterApp.every(CheckApp)) {
-      TabRecetteApp.push(recipes[i])
-    };
-  };
-
-  console.log(TabFilterIng);
-
-  function CheckIng(Ingredient) {
-    return NewTabIng.includes(Ingredient);
+     var RecipeIngredient = recipes[i].ingredients[j].ingredient;
+     replacecreme = RecipeIngredient.replace("Crème fraiche", "Crème fraîche");
+     replaceLait = replacecreme.replace("Lait de Coco", "Lait de coco");
+     replaceCoulis = replaceLait.replace("Coulis de tomate", "Coulis de tomates");
+     replaceTomates = replaceCoulis.replace("Coulis de tomatess", "Coulis de tomates");
+     NewArrayIngredient.push(replaceTomates.toLowerCase());
+    }
+    if(ArrayFilterIngredient.length > 0 && ArrayFilterIngredient.every(CheckIngredient)) {
+     ArrayRecipeIngredient.push(recipes[i]);
+    }
+    if(ArrayFilterUstensil.length > 0 && ArrayFilterUstensil.every(CheckUstensil)) {
+      ArrayRecipeUstensil.push(recipes[i]);
+    }
+    if(ArrayFilterAppliance.length > 0 && ArrayFilterAppliance.every(CheckAppliance)) {
+      ArrayRecipeAppliance.push(recipes[i])
+    }
   }
-  function CheckApp(Appareil) {
-    return recetteApp.includes(Appareil);
+  function CheckIngredient(Ingredient) {
+    return NewArrayIngredient.includes(Ingredient);
   }
-  function CheckUst(Ustensile) {
-    return recetteUst.includes(Ustensile);
+  function CheckAppliance(Appareil) {
+    return replacecasserole1.includes(Appareil);
   }
-  if(TabRecetteApp.length == 0) {
-    var TabRecette = TabRecetteIng.filter(ReCheck);
+  function CheckUstensil(Ustensil) {
+    return RecipeUstensil.includes(Ustensil);
   }
-  else if(TabRecetteIng.length == 0) {
-    var TabRecette = TabRecetteApp.filter(ReCheck);
+  if(ArrayRecipeAppliance.length == 0) {
+    var ArrayRecipe = ArrayRecipeIngredient.filter(ReCheck);
   }
-  else if(TabRecetteUst.length == 0) {
-    var TabRecette = TabRecetteIng.filter(Check);
+  else if(ArrayRecipeIngredient.length == 0) {
+    var ArrayRecipe = ArrayRecipeAppliance.filter(ReCheck);
+  }
+  else if(ArrayRecipeUstensil.length == 0) {
+    var ArrayRecipe = ArrayRecipeIngredient.filter(Check);
   }
   else {
-    var TabRecetteCheck = TabRecetteIng.filter(Check);
-    var TabRecette = TabRecetteCheck.filter(ReCheck);
+    var ArrayRecipeCheck = ArrayRecipeIngredient.filter(Check);
+    var ArrayRecipe = ArrayRecipeCheck.filter(ReCheck);
   }
   function Check(e) {
-    return TabRecetteApp.includes(e);
+    return ArrayRecipeAppliance.includes(e);
   }
   function ReCheck(e) {
-    return TabRecetteUst.includes(e);
+    return ArrayRecipeUstensil.includes(e);
   }
-  if (TabFilterIng.length == 0 && TabFilterApp.length == 0 && TabFilterUst.length == 0) {
-    afficherLesRecettes(recipes);
+  if (ArrayFilterIngredient.length == 0 && ArrayFilterAppliance.length == 0 && ArrayFilterUstensil.length == 0) {
+    DisplayRecipes(recipes);
   }
-
-  
-  else if (TabFilterIng.length == 0 && TabFilterUst.length == 0 && TabFilterApp.length > 0) {
-    afficherLesRecettes(TabRecetteApp);
+  else if (ArrayFilterIngredient.length == 0 && ArrayFilterUstensil.length == 0 && ArrayFilterAppliance.length > 0) {
+    DisplayRecipes(ArrayRecipeAppliance);
   }
-  else if (TabFilterApp.length == 0 && TabFilterUst.length == 0 && TabFilterIng.length > 0) {
-    afficherLesRecettes(TabRecetteIng);
+  else if (ArrayFilterAppliance.length == 0 && ArrayFilterUstensil.length == 0 && ArrayFilterIngredient.length > 0) {
+    DisplayRecipes(ArrayRecipeIngredient);
   }
-  else if (TabFilterApp.length == 0 && TabFilterIng.length == 0 && TabFilterUst.length > 0) {
-    afficherLesRecettes(TabRecetteUst);
+  else if (ArrayFilterAppliance.length == 0 && ArrayFilterIngredient.length == 0 && ArrayFilterUstensil.length > 0) {
+    DisplayRecipes(ArrayRecipeUstensil);
   }
   else {
-    afficherLesRecettes(TabRecette);
+    DisplayRecipes(ArrayRecipe);
   }
-  console.log(TabRecetteIng);
-  console.log(TabRecetteApp);
-  console.log(TabRecetteUst);
-  console.log(TabRecette);
-  TabRecetteIng = [];
-  TabRecetteApp = [];
-  TabRecetteUst = [];
-  TabRecette = [];
+  ArrayRecipeIngredient = [];
+  ArrayRecipeAppliance = [];
+  ArrayRecipeUstensil = [];
+  ArrayRecipe = [];
 }
+
+
