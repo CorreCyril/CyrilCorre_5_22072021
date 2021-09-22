@@ -1,0 +1,210 @@
+#TOP {
+  display: flex;
+  justify-content: center;
+}
+#logo {
+  height: 80px;
+}
+nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
+#search {
+  height: 40px;
+  width: 88%;
+  padding: 1%;
+  background-color: #E7E7E7;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 5px;
+}
+#search--text {
+  width: 600px;
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+.icon {
+  background-color: transparent;
+  cursor: pointer;
+  border: 0;
+}
+main {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+#filterline {
+  display: none;
+  justify-content: center;
+  width: 100%;
+}
+#filterbox {
+  display: flex;
+  justify-content: flex-start;
+  width: 92%;
+}
+.filter--class {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 150px;
+  height: 50px;
+  border-radius: 5px;
+  margin: 1%;
+  color: white;
+}
+#filter {
+  display: flex;
+  width: 90%;
+}
+#InputIngredient::-webkit-input-placeholder {
+  color: white !important;
+}
+#InputAppliance::-webkit-input-placeholder {
+  color: white !important;
+}
+#InputUstensil::-webkit-input-placeholder {
+  color: white !important;
+}
+#InputIngredient {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: white;
+}
+#InputAppliance {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: white;
+}
+#InputUstensil {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: white;
+}
+.box {
+  width: 150px;
+  height: 69px;
+  margin-right: 2%;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  color: white;
+  font-size: 20px;
+  font-weight: 500;
+}
+.research {
+  width: 600px;
+  margin-right: 2%;
+  border-radius: 5px;
+  display: none;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  padding-top: 10px;
+}
+.blue {
+  background-color: #3282F7;
+}
+.green {
+  background-color: #68D9A4;
+}
+.red {
+  background-color: #ED6454;
+}
+.Res--Title {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+}
+.Divs {
+  display: flex;
+  width: 90%;
+}
+.Div {
+  width: 33%;
+}
+#card {
+  width: 94%;
+  display: flex;
+  flex-wrap: wrap;
+}
+.card--item {
+  width: 29%;
+  height: 364px;
+  background-color: #C7BEBE;
+  margin: 2%;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column-reverse;
+}
+.card--menu {
+  width: 100%;
+  font-size: 13px;
+  background-color: #E7E7E7;
+  border-radius: 0 0 5px 5px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  
+}
+.card--title {
+  width: 95%;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0;
+}
+.card--atname {
+  font-size: 17px;
+  font-weight: normal;
+  
+}
+.card--time {
+  width: 140px;
+  font-size: 16px; 
+  text-align: right; 
+}
+.logtime {
+  margin-right: 10px;
+}
+.card--ingredients {
+  width: 45%;
+  height: 126px;
+  margin-top: 0;
+  
+}
+.card--ingredientslist {
+  list-style-type: none;
+  padding-left: 0;
+  margin-top: 0;
+  
+}
+li {
+  font-weight: bold;
+  
+}
+span {
+  font-weight: normal;
+}
+.card--meth {
+  width: 50%;
+  margin-top: 0;
+}
+.insertP {
+  cursor: pointer;
+}
