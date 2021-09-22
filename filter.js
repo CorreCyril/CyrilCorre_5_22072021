@@ -437,7 +437,6 @@ var reply_click_Appliance = function() {
   }
   researchrecipes();
 }
-
 function researchrecipes() {
   for(var i=0; i<recipes.length; i++) {
     var RecipeAppliance = recipes[i].appliance;
@@ -458,44 +457,25 @@ function researchrecipes() {
       var RecipeUstensil = recipes[i].ustensils[j];
       NewArrayUstensil.push(RecipeUstensil.toLowerCase());
     }
-    if(ArrayFilterIngredient.length > 0 && ArrayFilterIngredient.every(CheckIngredient)) {
-      ArrayRecipeIngredient.push(recipes[i]);
+    for(var k=0; k < ArrayFilterIngredient.length; k++) {
+      if(ArrayFilterIngredient.length > 0 && NewArrayIngredient.includes(ArrayFilterIngredient[k])) {
+        ArrayRecipeIngredient.push(recipes[i]);
+      }
     }
-    if(ArrayFilterUstensil.length > 0 && ArrayFilterUstensil.every(CheckUstensil)) {
-      ArrayRecipeUstensil.push(recipes[i]);
+    for(var k=0; k < ArrayFilterUstensil.length; k++) {
+      if(ArrayFilterUstensil.length > 0 && NewArrayUstensil.includes(ArrayFilterUstensil[k])) {
+        ArrayRecipeUstensil.push(recipes[i]);
+      }
     }
-    if(ArrayFilterAppliance.length > 0 && ArrayFilterAppliance.every(CheckAppliance)) {
-      ArrayRecipeAppliance.push(recipes[i])
+    for(var k=0; k < ArrayFilterAppliance.length; k++) {
+      if(ArrayFilterAppliance.length > 0 && replacecasserole1.includes(ArrayFilterAppliance[k])) {
+        ArrayRecipeAppliance.push(recipes[i])
+      }
     }
   }
-  function CheckIngredient(Ingredient) {
-    return NewArrayIngredient.includes(Ingredient);
-  }
-  function CheckAppliance(Appareil) {
-    return replacecasserole1.includes(Appareil);
-  }
-  function CheckUstensil(Ustensil) {
-    return NewArrayUstensil.includes(Ustensil);
-  }
-  if(ArrayRecipeAppliance.length == 0) {
-    var ArrayRecipe = ArrayRecipeIngredient.filter(ReCheck);
-  }
-  else if(ArrayRecipeIngredient.length == 0) {
-    var ArrayRecipe = ArrayRecipeAppliance.filter(ReCheck);
-  }
-  else if(ArrayRecipeUstensil.length == 0) {
-    var ArrayRecipe = ArrayRecipeIngredient.filter(Check);
-  }
-  else {
-    var ArrayRecipeCheck = ArrayRecipeIngredient.filter(Check);
-    var ArrayRecipe = ArrayRecipeCheck.filter(ReCheck);
-  }
-  function Check(e) {
-    return ArrayRecipeAppliance.includes(e);
-  }
-  function ReCheck(e) {
-    return ArrayRecipeUstensil.includes(e);
-  }
+  var ArrayFilterRecipeIngredient = ArrayRecipeIngredient.filter(function(ele , pos){
+    return ArrayRecipeIngredient.indexOf(ele) == pos;
+  });
   if (ArrayFilterIngredient.length == 0 && ArrayFilterAppliance.length == 0 && ArrayFilterUstensil.length == 0) {
     DisplayRecipes(recipes);
   }
@@ -503,7 +483,7 @@ function researchrecipes() {
     DisplayRecipes(ArrayRecipeAppliance);
   }
   else if (ArrayFilterAppliance.length == 0 && ArrayFilterUstensil.length == 0 && ArrayFilterIngredient.length > 0) {
-    DisplayRecipes(ArrayRecipeIngredient);
+    DisplayRecipes(ArrayFilterRecipeIngredient);
   }
   else if (ArrayFilterAppliance.length == 0 && ArrayFilterIngredient.length == 0 && ArrayFilterUstensil.length > 0) {
     DisplayRecipes(ArrayRecipeUstensil);
