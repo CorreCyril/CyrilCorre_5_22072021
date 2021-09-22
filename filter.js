@@ -511,5 +511,3 @@ function researchrecipes() {
   ArrayRecipeUstensil = [];
   ArrayRecipe = [];
 }
-
-
