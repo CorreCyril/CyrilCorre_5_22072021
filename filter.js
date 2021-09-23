@@ -437,6 +437,7 @@ var reply_click_Appliance = function() {
   }
   researchrecipes();
 }
+
 function researchrecipes() {
   for(var i=0; i<recipes.length; i++) {
     var RecipeAppliance = recipes[i].appliance;
