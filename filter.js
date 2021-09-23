@@ -368,6 +368,8 @@ var reply_click_Ingredient = function() {
       researchrecipes();
     });
     l++;
+    blue.style.display = "flex";
+    resblue.style.display = "none";
   }
   researchrecipes();
 }
@@ -401,6 +403,8 @@ var reply_click_Ustensil = function() {
       researchrecipes();
     });
     m++;
+    red.style.display = "flex";
+    resred.style.display = "none";
   }
   researchrecipes();
 }
@@ -434,6 +438,8 @@ var reply_click_Appliance = function() {
       researchrecipes();
     });
     k++;
+    green.style.display = "flex";
+    resgreen.style.display = "none";
   }
   researchrecipes();
 }
