@@ -334,7 +334,7 @@ InputUstensil.addEventListener("keyup", function() {
 ArrayFilterIngredient = [];
 ArrayFilterAppliance = [];
 ArrayFilterUstensil = [];
-ArrayRecipe = [];
+Recipe = [];
 ArrayRecipeIngredient = [];
 ArrayRecipeAppliance = [];
 ArrayRecipeUstensil = [];
@@ -445,6 +445,8 @@ function researchrecipes() {
     replacecasserole1 = replacecasserole.replace("Casserole.", "Casserole");
     var RecipeUstensil = recipes[i].ustensils;
     NewArrayIngredient = [];
+    NewArrayUstensil = [];
+    
     for(var j=0; j < recipes[i].ingredients.length; j++) {
      var RecipeIngredient = recipes[i].ingredients[j].ingredient;
      replacecreme = RecipeIngredient.replace("Crème fraiche", "Crème fraîche");
@@ -453,44 +455,36 @@ function researchrecipes() {
      replaceTomates = replaceCoulis.replace("Coulis de tomatess", "Coulis de tomates");
      NewArrayIngredient.push(replaceTomates.toLowerCase());
     }
-    if(ArrayFilterIngredient.length > 0 && ArrayFilterIngredient.every(CheckIngredient)) {
-     ArrayRecipeIngredient.push(recipes[i]);
+    for(var j=0; j < recipes[i].ustensils.length; j++) {
+      var RecipeUstensil = recipes[i].ustensils[j];
+      NewArrayUstensil.push(RecipeUstensil.toLowerCase());
     }
-    if(ArrayFilterUstensil.length > 0 && ArrayFilterUstensil.every(CheckUstensil)) {
-      ArrayRecipeUstensil.push(recipes[i]);
+    for(var k=0; k < ArrayFilterIngredient.length; k++) {
+      if(ArrayFilterIngredient.length > 0 && NewArrayIngredient.includes(ArrayFilterIngredient[k])) {
+        ArrayRecipeIngredient.push(recipes[i]);
+      }
     }
-    if(ArrayFilterAppliance.length > 0 && ArrayFilterAppliance.every(CheckAppliance)) {
-      ArrayRecipeAppliance.push(recipes[i])
+    for(var k=0; k < ArrayFilterUstensil.length; k++) {
+      if(ArrayFilterUstensil.length > 0 && NewArrayUstensil.includes(ArrayFilterUstensil[k])) {
+        ArrayRecipeUstensil.push(recipes[i]);
+      }
+    }
+    for(var k=0; k < ArrayFilterAppliance.length; k++) {
+      if(ArrayFilterAppliance.length > 0 && replacecasserole1.includes(ArrayFilterAppliance[k])) {
+        ArrayRecipeAppliance.push(recipes[i])
+      }
     }
   }
-  function CheckIngredient(Ingredient) {
-    return NewArrayIngredient.includes(Ingredient);
-  }
-  function CheckAppliance(Appareil) {
-    return replacecasserole1.includes(Appareil);
-  }
-  function CheckUstensil(Ustensil) {
-    return RecipeUstensil.includes(Ustensil);
-  }
-  if(ArrayRecipeAppliance.length == 0) {
-    var ArrayRecipe = ArrayRecipeIngredient.filter(ReCheck);
-  }
-  else if(ArrayRecipeIngredient.length == 0) {
-    var ArrayRecipe = ArrayRecipeAppliance.filter(ReCheck);
-  }
-  else if(ArrayRecipeUstensil.length == 0) {
-    var ArrayRecipe = ArrayRecipeIngredient.filter(Check);
-  }
-  else {
-    var ArrayRecipeCheck = ArrayRecipeIngredient.filter(Check);
-    var ArrayRecipe = ArrayRecipeCheck.filter(ReCheck);
-  }
-  function Check(e) {
-    return ArrayRecipeAppliance.includes(e);
-  }
-  function ReCheck(e) {
-    return ArrayRecipeUstensil.includes(e);
-  }
+  var ArrayFilterRecipeIngredient = ArrayRecipeIngredient.filter(function(ele , pos){
+    return ArrayRecipeIngredient.indexOf(ele) == pos;
+  });
+  var ArrayFilterRecipeUstensil = ArrayRecipeUstensil.filter(function(ele , pos){
+    return ArrayRecipeUstensil.indexOf(ele) == pos;
+  });
+  ArrayRecipe = ArrayFilterRecipeIngredient.concat(ArrayRecipeAppliance, ArrayFilterRecipeUstensil);
+  var ArrayFilterRecipe = ArrayRecipe.filter(function(ele , pos){
+    return ArrayRecipe.indexOf(ele) == pos;
+  });
   if (ArrayFilterIngredient.length == 0 && ArrayFilterAppliance.length == 0 && ArrayFilterUstensil.length == 0) {
     DisplayRecipes(recipes);
   }
@@ -498,13 +492,13 @@ function researchrecipes() {
     DisplayRecipes(ArrayRecipeAppliance);
   }
   else if (ArrayFilterAppliance.length == 0 && ArrayFilterUstensil.length == 0 && ArrayFilterIngredient.length > 0) {
-    DisplayRecipes(ArrayRecipeIngredient);
+    DisplayRecipes(ArrayFilterRecipeIngredient);
   }
   else if (ArrayFilterAppliance.length == 0 && ArrayFilterIngredient.length == 0 && ArrayFilterUstensil.length > 0) {
-    DisplayRecipes(ArrayRecipeUstensil);
+    DisplayRecipes(ArrayFilterRecipeUstensil);
   }
   else {
-    DisplayRecipes(ArrayRecipe);
+    DisplayRecipes(ArrayFilterRecipe);
   }
   ArrayRecipeIngredient = [];
   ArrayRecipeAppliance = [];
