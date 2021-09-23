@@ -334,7 +334,7 @@ InputUstensil.addEventListener("keyup", function() {
 ArrayFilterIngredient = [];
 ArrayFilterAppliance = [];
 ArrayFilterUstensil = [];
-Recipe = [];
+ArrayRecipe = [];
 ArrayRecipeIngredient = [];
 ArrayRecipeAppliance = [];
 ArrayRecipeUstensil = [];
@@ -445,6 +445,7 @@ function researchrecipes() {
     var RecipeUstensil = recipes[i].ustensils;
     NewArrayIngredient = [];
     NewArrayUstensil = [];
+    
     for(var j=0; j < recipes[i].ingredients.length; j++) {
      var RecipeIngredient = recipes[i].ingredients[j].ingredient;
      replacecreme = RecipeIngredient.replace("Crème fraiche", "Crème fraîche");
@@ -476,6 +477,13 @@ function researchrecipes() {
   var ArrayFilterRecipeIngredient = ArrayRecipeIngredient.filter(function(ele , pos){
     return ArrayRecipeIngredient.indexOf(ele) == pos;
   });
+  var ArrayFilterRecipeUstensil = ArrayRecipeUstensil.filter(function(ele , pos){
+    return ArrayRecipeUstensil.indexOf(ele) == pos;
+  });
+  ArrayRecipe = ArrayFilterRecipeIngredient.concat(ArrayRecipeAppliance, ArrayFilterRecipeUstensil);
+  var ArrayFilterRecipe = ArrayRecipe.filter(function(ele , pos){
+    return ArrayRecipe.indexOf(ele) == pos;
+  });
   if (ArrayFilterIngredient.length == 0 && ArrayFilterAppliance.length == 0 && ArrayFilterUstensil.length == 0) {
     DisplayRecipes(recipes);
   }
@@ -486,10 +494,10 @@ function researchrecipes() {
     DisplayRecipes(ArrayFilterRecipeIngredient);
   }
   else if (ArrayFilterAppliance.length == 0 && ArrayFilterIngredient.length == 0 && ArrayFilterUstensil.length > 0) {
-    DisplayRecipes(ArrayRecipeUstensil);
+    DisplayRecipes(ArrayFilterRecipeUstensil);
   }
   else {
-    DisplayRecipes(ArrayRecipe);
+    DisplayRecipes(ArrayFilterRecipe);
   }
   ArrayRecipeIngredient = [];
   ArrayRecipeAppliance = [];
