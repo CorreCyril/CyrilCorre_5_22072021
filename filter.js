@@ -334,7 +334,7 @@ InputUstensil.addEventListener("keyup", function() {
 ArrayFilterIngredient = [];
 ArrayFilterAppliance = [];
 ArrayFilterUstensil = [];
-Recipe = [];
+ArrayRecipe = [];
 ArrayRecipeIngredient = [];
 ArrayRecipeAppliance = [];
 ArrayRecipeUstensil = [];
