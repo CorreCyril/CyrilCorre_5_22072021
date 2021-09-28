@@ -17,39 +17,39 @@ searchBar.addEventListener("change", function(event) {
 
 function Research(text) {
   FindRecipe = [];
-  for(var i=0; i<recipes.length; i++) {
+  recipes.forEach(element => {
     var entrance = text.toLowerCase();
-    var title = recipes[i].name.toLowerCase();
-    var appliance = recipes[i].appliance.toLowerCase();
-    for(var j=0; j < recipes[i].ingredients.length; j++) {
-      var Ingredient = recipes[i].ingredients[j].ingredient.toLowerCase();
+    var title = element.name.toLowerCase();
+    var appliance = element.appliance.toLowerCase();
+    element.ingredients.forEach(elementingredient => {
+      var Ingredient = elementingredient.ingredient.toLowerCase();
       if(Ingredient.includes(entrance) && FindRecipe.every(VerifRecipe) == true) {
-        FindRecipe.push(recipes[i]);
+        FindRecipe.push(element);
       }
-    }
-    for(var k=0; k < recipes[i].ustensils.length; k++) {
-      var Ustensil = recipes[i].ustensils[k].toLowerCase();
+    })
+    element.ustensils.forEach (elementustensil => {
+      var Ustensil = elementustensil.toLowerCase();
       if(Ustensil.includes(entrance) && FindRecipe.every(VerifRecipe) == true) {
-        FindRecipe.push(recipes[i]);
+        FindRecipe.push(element);
       }
-    }
+    })
     if(title.includes(entrance) && FindRecipe.every(VerifRecipe) == true || appliance.includes(entrance) && FindRecipe.every(VerifRecipe) == true) {
-      FindRecipe.push(recipes[i]);
+      FindRecipe.push(element);
     }
-  }
-  function VerifRecipe (element) {
-    return element != recipes[i]; 
-  }
+    function VerifRecipe (index) {
+      return index != element; 
+    }
+  })
   DisplayRecipes(FindRecipe);
 }
 
 function DisplayRecipes(recipes) {
   var card = document.getElementById("card");
   card.innerHTML = "";
-  for(var i=0; i<recipes.length; i++) {
+  recipes.forEach(element => {
     var insertdiv = document.createElement ("div");
     insertdiv.classList = "card--item";
-    insertdiv.id = "div" + recipes[i].id;
+    insertdiv.id = "div" + element.id;
     var insertmenu = document.createElement ("div");
     insertmenu.classList = "card--menu";
     insertdiv.appendChild(insertmenu);
@@ -62,7 +62,7 @@ function DisplayRecipes(recipes) {
     var atname = document.createElement ("h2");
     atname.classList = "card--atname";
     insertname.appendChild(atname);
-    var Arrayname = document.createTextNode (recipes[i].name);
+    var Arrayname = document.createTextNode (element.name);
     atname.appendChild(Arrayname);
     var inserttime = document.createElement ("div");
     inserttime.classList = "card--time";
@@ -73,7 +73,7 @@ function DisplayRecipes(recipes) {
     var logtime = document.createElement ("i");
     logtime.classList = "far fa-clock fa-md logtime";
     attime.appendChild(logtime);
-    var Arraytime = document.createTextNode (recipes[i].time + " min");
+    var Arraytime = document.createTextNode (element.time + " min");
     attime.appendChild(Arraytime);
     var insertingredients = document.createElement ("div");
     insertingredients.classList = "card--ingredients";
@@ -81,45 +81,41 @@ function DisplayRecipes(recipes) {
     var ingredientslist = document.createElement ("ul");
     ingredientslist.classList = "card--ingredientslist";
     insertingredients.appendChild(ingredientslist);
-    for(var j=0; j < recipes[i].ingredients.length; j++) {
+    element.ingredients.forEach(elementingredient => {
       var insertlist = document.createElement ("li");
-      var ingredientstxt = document.createTextNode (recipes[i].ingredients[j].ingredient);
-      var ingredientstxt1 = document.createTextNode (recipes[i].ingredients[j].ingredient + ": ");
+      var ingredientstxt = document.createTextNode (elementingredient.ingredient);
+      var ingredientstxt1 = document.createTextNode (elementingredient.ingredient + ": ");
       var insertspan = document.createElement ("span");
-      var ingredientsquantity = document.createTextNode ((recipes[i].ingredients[j].quantity + " "));
-      var ingredientsquantite = document.createTextNode ((recipes[i].ingredients[j].quantite));
+      var ingredientsquantity = document.createTextNode ((elementingredient.quantity + " "));
+      var ingredientsquantite = document.createTextNode ((elementingredient.quantite));
       ingredientslist.appendChild(insertlist);
-      if (recipes[i].ingredients[j].quantity == undefined && recipes[i].ingredients[j].quantite == undefined) {
+      if (elementingredient.quantity == undefined && elementingredient.quantite == undefined) {
         insertlist.appendChild(ingredientstxt);
       }
       else {
         insertlist.appendChild(ingredientstxt1);
       }
-      if (recipes[i].ingredients[j].quantity==undefined) {
-      }
-      else {
+      if (elementingredient.quantity != undefined) {
         insertspan.appendChild(ingredientsquantity);
       }
-      if (recipes[i].ingredients[j].quantite==undefined) {
-      }
-      else {
+      if (elementingredient.quantite != undefined) {
         insertspan.appendChild(ingredientsquantite);
       }
       insertlist.appendChild(insertspan);
-      if (recipes[i].ingredients[j].unit != undefined) {
-        var unit = recipes[i].ingredients[j].unit;
+      if (elementingredient.unit != undefined) {
+        var unit = elementingredient.unit;
         var replaceunit = unit.replace("grammes", "g");
         var replaceunit1 = replaceunit.replace("cuillères à soupe", "cuillères");
         var ingredientsunit = document.createTextNode (replaceunit1);
         insertspan.appendChild(ingredientsunit);
       }
-    }
+    })
     var insertmeth = document.createElement ("div");
     insertmeth.classList = "card--meth";
     insertmenu.appendChild(insertmeth);
-    var meth1 = document.createTextNode (recipes[i].description.split(" ").slice(0, 33).join(" ") + (" ..."));
-    var meth2 = document.createTextNode (recipes[i].description);
-    var nb = recipes[i].description.split(" ");
+    var meth1 = document.createTextNode (element.description.split(" ").slice(0, 33).join(" ") + (" ..."));
+    var meth2 = document.createTextNode (element.description);
+    var nb = element.description.split(" ");
     if (nb.length < 33) {
       insertmeth.appendChild(meth2);
     }
@@ -127,7 +123,7 @@ function DisplayRecipes(recipes) {
       insertmeth.appendChild(meth1);
     }
     card.appendChild(insertdiv);
-  }
+  })
 }
 
 Ingredientdown.addEventListener("click", function() {
@@ -190,16 +186,16 @@ function researchIngredient() {
   ArrayIngredient = [];
   var inputIngredient = document.getElementById("InputIngredient");
   var valueIngredient = inputIngredient.value.toLowerCase();
-  for(var i=0; i<recipes.length; i++) {
-    for(var j=0; j < recipes[i].ingredients.length; j++) {
-      var ListIngredients = recipes[i].ingredients[j].ingredient;
+  recipes.forEach(element => {
+    element.ingredients.forEach(elementingredient => {
+      var ListIngredients = elementingredient.ingredient;
       replacecreme = ListIngredients.replace("Crème fraiche", "Crème fraîche");
       replaceLait = replacecreme.replace("Lait de Coco", "Lait de coco");
       replaceCoulis = replaceLait.replace("Coulis de tomate", "Coulis de tomates");
       replaceTomates = replaceCoulis.replace("Coulis de tomatess", "Coulis de tomates");
       ListIngredient.push(replaceTomates);
-    }
-  }
+    })
+  })
   var FilterIngredient = ListIngredient.filter(function(ele , pos){
   return ListIngredient.indexOf(ele) == pos;
   });
@@ -207,11 +203,11 @@ function researchIngredient() {
   function increment() {
     j++;
   }
-  for(var i=0; i<FilterIngredient.length; i++) {
-    if (FilterIngredient[i].toLowerCase().includes(valueIngredient)) {
-      ArrayIngredient.push(FilterIngredient[i]);
+  FilterIngredient.forEach(elementFilterIngredient => {
+    if (elementFilterIngredient.toLowerCase().includes(valueIngredient)) {
+      ArrayIngredient.push(elementFilterIngredient);
     }
-  }
+  })
   for(var i=0; i<ArrayIngredient.length; i++) {
     increment();
     var insertP = document.createElement("P");
@@ -243,12 +239,12 @@ function researchAppliance() {
   ArrayAppliance = [];
   var inputAppliance = document.getElementById("InputAppliance");
   var valueAppliance = inputAppliance.value.toLowerCase();
-  for(var i=0; i<recipes.length; i++) {
-    var casserole = recipes[i].appliance;
+  recipes.forEach(element => {
+    var casserole = element.appliance;
     replacecasserole = casserole.replace("Casserolle", "Casserole");
     replacecasserole1 = replacecasserole.replace("Casserole.", "Casserole");
     ListAppliance.push(replacecasserole1);
-  }
+  })
   var FilterAppliance = ListAppliance.filter(function(ele , pos){
   return ListAppliance.indexOf(ele) == pos;
   });
@@ -256,11 +252,11 @@ function researchAppliance() {
   function increment() {
     j++;
   }
-  for(var i=0; i<FilterAppliance.length; i++) {
-    if (FilterAppliance[i].toLowerCase().includes(valueAppliance)) {
-      ArrayAppliance.push(FilterAppliance[i]);
+  FilterAppliance.forEach(elementFilterAppliance => {
+    if (elementFilterAppliance.toLowerCase().includes(valueAppliance)) {
+      ArrayAppliance.push(elementFilterAppliance);
     }
-  }
+  })
   for(var i=0; i<ArrayAppliance.length; i++) {
     increment();
     var insertP = document.createElement("P");
@@ -292,13 +288,17 @@ function researchUstensil() {
   ArrayUstensil = [];
   var inputUstensil = document.getElementById("InputUstensil");
   var valueUstensil = inputUstensil.value.toLowerCase();
-  for(var i=0; i<recipes.length; i++) {
-    for(var j=0; j<recipes[i].ustensils.length; j++) {
-      var ustensil = recipes[i].ustensils[j].toLowerCase();
-      var ustensiluppercase = ustensil.replace(/(^\w{1})|(\s+\w{1})/g, lettre => lettre.toUpperCase());
-      ListUstensil.push(ustensiluppercase);
-    }
-  }
+  recipes.forEach(element => {
+    var ustensil = element.ustensils;
+    var replaceustensil = ustensil.map(elementustensil => {
+      return elementustensil.toLowerCase();
+    })
+    replaceustensil.forEach(elementustensil => {
+      var FirstLetter = elementustensil.charAt(0);
+      replaceupperustensil = elementustensil.replace(FirstLetter, FirstLetter.toUpperCase());
+      ListUstensil.push(replaceupperustensil);
+    })
+  })
   var FilterUstensil = ListUstensil.filter(function(ele , pos){
   return ListUstensil.indexOf(ele) == pos;
   });
@@ -306,11 +306,11 @@ function researchUstensil() {
   function increment() {
     j++;
   }
-  for(var i=0; i<FilterUstensil.length; i++) {
-    if (FilterUstensil[i].toLowerCase().includes(valueUstensil)) {
-      ArrayUstensil.push(FilterUstensil[i]);
+  FilterUstensil.forEach(elementfilterustensil => {
+    if (elementfilterustensil.toLowerCase().includes(valueUstensil)) {
+      ArrayUstensil.push(elementfilterustensil);
     }
-  }
+  })
   for(var i=0; i<ArrayUstensil.length; i++) {
     increment();
     var insertP = document.createElement("P");
@@ -334,7 +334,7 @@ InputUstensil.addEventListener("keyup", function() {
 ArrayFilterIngredient = [];
 ArrayFilterAppliance = [];
 ArrayFilterUstensil = [];
-ArrayRecipe = [];
+Recipe = [];
 ArrayRecipeIngredient = [];
 ArrayRecipeAppliance = [];
 ArrayRecipeUstensil = [];
@@ -368,9 +368,9 @@ var reply_click_Ingredient = function() {
       researchrecipes();
     });
     l++;
-    blue.style.display = "flex";
-    resblue.style.display = "none";
   }
+  blue.style.display = "flex";
+  resblue.style.display = "none";
   researchrecipes();
 }
 
@@ -403,9 +403,9 @@ var reply_click_Ustensil = function() {
       researchrecipes();
     });
     m++;
-    red.style.display = "flex";
-    resred.style.display = "none";
   }
+  red.style.display = "flex";
+  resred.style.display = "none";
   researchrecipes();
 }
 
@@ -438,49 +438,46 @@ var reply_click_Appliance = function() {
       researchrecipes();
     });
     k++;
-    green.style.display = "flex";
-    resgreen.style.display = "none";
   }
+  green.style.display = "flex";
+  resgreen.style.display = "none";
   researchrecipes();
 }
 
 function researchrecipes() {
-  for(var i=0; i<recipes.length; i++) {
-    var RecipeAppliance = recipes[i].appliance;
+  recipes.forEach(elementrecipes => {
+    var RecipeAppliance = elementrecipes.appliance;
     replacecasserole = RecipeAppliance.replace("Casserolle", "Casserole");
     replacecasserole1 = replacecasserole.replace("Casserole.", "Casserole");
-    var RecipeUstensil = recipes[i].ustensils;
     NewArrayIngredient = [];
-    NewArrayUstensil = [];
-    
-    for(var j=0; j < recipes[i].ingredients.length; j++) {
-     var RecipeIngredient = recipes[i].ingredients[j].ingredient;
+        
+    elementrecipes.ingredients.forEach(elementrecipesingredients => {
+     var RecipeIngredient = elementrecipesingredients.ingredient;
      replacecreme = RecipeIngredient.replace("Crème fraiche", "Crème fraîche");
      replaceLait = replacecreme.replace("Lait de Coco", "Lait de coco");
      replaceCoulis = replaceLait.replace("Coulis de tomate", "Coulis de tomates");
      replaceTomates = replaceCoulis.replace("Coulis de tomatess", "Coulis de tomates");
      NewArrayIngredient.push(replaceTomates.toLowerCase());
-    }
-    for(var j=0; j < recipes[i].ustensils.length; j++) {
-      var RecipeUstensil = recipes[i].ustensils[j];
-      NewArrayUstensil.push(RecipeUstensil.toLowerCase());
-    }
-    for(var k=0; k < ArrayFilterIngredient.length; k++) {
-      if(ArrayFilterIngredient.length > 0 && NewArrayIngredient.includes(ArrayFilterIngredient[k])) {
-        ArrayRecipeIngredient.push(recipes[i]);
+    })
+    var RecipeUstensil = elementrecipes.ustensils.map(elementustensil => {
+      return elementustensil.toLowerCase();
+    })
+    ArrayFilterIngredient.forEach(elementArrayFilterIngredient => {
+      if(ArrayFilterIngredient.length > 0 && NewArrayIngredient.includes(elementArrayFilterIngredient)) {
+        ArrayRecipeIngredient.push(elementrecipes);
       }
-    }
-    for(var k=0; k < ArrayFilterUstensil.length; k++) {
-      if(ArrayFilterUstensil.length > 0 && NewArrayUstensil.includes(ArrayFilterUstensil[k])) {
-        ArrayRecipeUstensil.push(recipes[i]);
+    })
+    ArrayFilterUstensil.forEach(elementArrayFilterUstensil => {
+      if(ArrayFilterUstensil.length > 0 && RecipeUstensil.includes(elementArrayFilterUstensil)) {
+        ArrayRecipeUstensil.push(elementrecipes);
       }
-    }
-    for(var k=0; k < ArrayFilterAppliance.length; k++) {
-      if(ArrayFilterAppliance.length > 0 && replacecasserole1.includes(ArrayFilterAppliance[k])) {
-        ArrayRecipeAppliance.push(recipes[i])
+    })
+    ArrayFilterAppliance.forEach(elementArrayFilterAppliance => {
+      if(ArrayFilterAppliance.length > 0 && replacecasserole1.includes(elementArrayFilterAppliance)) {
+        ArrayRecipeAppliance.push(elementrecipes);
       }
-    }
-  }
+    })
+  })
   var ArrayFilterRecipeIngredient = ArrayRecipeIngredient.filter(function(ele , pos){
     return ArrayRecipeIngredient.indexOf(ele) == pos;
   });
