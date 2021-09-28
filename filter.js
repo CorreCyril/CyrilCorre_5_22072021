@@ -95,15 +95,11 @@ function DisplayRecipes(recipes) {
       else {
         insertlist.appendChild(ingredientstxt1);
       }
-      if (recipes[i].ingredients[j].quantity==undefined) {
+      if (recipes[i].ingredients[j].quantity !=undefined) {
+       insertspan.appendChild(ingredientsquantity);
       }
-      else {
-        insertspan.appendChild(ingredientsquantity);
-      }
-      if (recipes[i].ingredients[j].quantite==undefined) {
-      }
-      else {
-        insertspan.appendChild(ingredientsquantite);
+      if (recipes[i].ingredients[j].quantite !=undefined) {
+       insertspan.appendChild(ingredientsquantite);
       }
       insertlist.appendChild(insertspan);
       if (recipes[i].ingredients[j].unit != undefined) {
@@ -295,7 +291,7 @@ function researchUstensil() {
   for(var i=0; i<recipes.length; i++) {
     for(var j=0; j<recipes[i].ustensils.length; j++) {
       var ustensil = recipes[i].ustensils[j].toLowerCase();
-      var ustensiluppercase = ustensil.replace(/(^\w{1})|(\s+\w{1})/g, lettre => lettre.toUpperCase());
+      var ustensiluppercase = ustensil.replace(/(é\w{0})|(^\w{1})|(\s+\w{1})/g, lettre => lettre.toUpperCase());
       ListUstensil.push(ustensiluppercase);
     }
   }
@@ -334,7 +330,7 @@ InputUstensil.addEventListener("keyup", function() {
 ArrayFilterIngredient = [];
 ArrayFilterAppliance = [];
 ArrayFilterUstensil = [];
-Recipe = [];
+ArrayRecipe = [];
 ArrayRecipeIngredient = [];
 ArrayRecipeAppliance = [];
 ArrayRecipeUstensil = [];
@@ -445,8 +441,6 @@ function researchrecipes() {
     replacecasserole1 = replacecasserole.replace("Casserole.", "Casserole");
     var RecipeUstensil = recipes[i].ustensils;
     NewArrayIngredient = [];
-    NewArrayUstensil = [];
-    
     for(var j=0; j < recipes[i].ingredients.length; j++) {
      var RecipeIngredient = recipes[i].ingredients[j].ingredient;
      replacecreme = RecipeIngredient.replace("Crème fraiche", "Crème fraîche");
@@ -455,36 +449,44 @@ function researchrecipes() {
      replaceTomates = replaceCoulis.replace("Coulis de tomatess", "Coulis de tomates");
      NewArrayIngredient.push(replaceTomates.toLowerCase());
     }
-    for(var j=0; j < recipes[i].ustensils.length; j++) {
-      var RecipeUstensil = recipes[i].ustensils[j];
-      NewArrayUstensil.push(RecipeUstensil.toLowerCase());
+    if(ArrayFilterIngredient.length > 0 && ArrayFilterIngredient.every(CheckIngredient)) {
+     ArrayRecipeIngredient.push(recipes[i]);
     }
-    for(var k=0; k < ArrayFilterIngredient.length; k++) {
-      if(ArrayFilterIngredient.length > 0 && NewArrayIngredient.includes(ArrayFilterIngredient[k])) {
-        ArrayRecipeIngredient.push(recipes[i]);
-      }
+    if(ArrayFilterUstensil.length > 0 && ArrayFilterUstensil.every(CheckUstensil)) {
+      ArrayRecipeUstensil.push(recipes[i]);
     }
-    for(var k=0; k < ArrayFilterUstensil.length; k++) {
-      if(ArrayFilterUstensil.length > 0 && NewArrayUstensil.includes(ArrayFilterUstensil[k])) {
-        ArrayRecipeUstensil.push(recipes[i]);
-      }
-    }
-    for(var k=0; k < ArrayFilterAppliance.length; k++) {
-      if(ArrayFilterAppliance.length > 0 && replacecasserole1.includes(ArrayFilterAppliance[k])) {
-        ArrayRecipeAppliance.push(recipes[i])
-      }
+    if(ArrayFilterAppliance.length > 0 && ArrayFilterAppliance.every(CheckAppliance)) {
+      ArrayRecipeAppliance.push(recipes[i])
     }
   }
-  var ArrayFilterRecipeIngredient = ArrayRecipeIngredient.filter(function(ele , pos){
-    return ArrayRecipeIngredient.indexOf(ele) == pos;
-  });
-  var ArrayFilterRecipeUstensil = ArrayRecipeUstensil.filter(function(ele , pos){
-    return ArrayRecipeUstensil.indexOf(ele) == pos;
-  });
-  ArrayRecipe = ArrayFilterRecipeIngredient.concat(ArrayRecipeAppliance, ArrayFilterRecipeUstensil);
-  var ArrayFilterRecipe = ArrayRecipe.filter(function(ele , pos){
-    return ArrayRecipe.indexOf(ele) == pos;
-  });
+  function CheckIngredient(Ingredient) {
+    return NewArrayIngredient.includes(Ingredient);
+  }
+  function CheckAppliance(Appareil) {
+    return replacecasserole1.includes(Appareil);
+  }
+  function CheckUstensil(Ustensil) {
+    return RecipeUstensil.includes(Ustensil);
+  }
+  if(ArrayRecipeAppliance.length == 0) {
+    var ArrayRecipe = ArrayRecipeIngredient.filter(ReCheck);
+  }
+  else if(ArrayRecipeIngredient.length == 0) {
+    var ArrayRecipe = ArrayRecipeAppliance.filter(ReCheck);
+  }
+  else if(ArrayRecipeUstensil.length == 0) {
+    var ArrayRecipe = ArrayRecipeIngredient.filter(Check);
+  }
+  else {
+    var ArrayRecipeCheck = ArrayRecipeIngredient.filter(Check);
+    var ArrayRecipe = ArrayRecipeCheck.filter(ReCheck);
+  }
+  function Check(e) {
+    return ArrayRecipeAppliance.includes(e);
+  }
+  function ReCheck(e) {
+    return ArrayRecipeUstensil.includes(e);
+  }
   if (ArrayFilterIngredient.length == 0 && ArrayFilterAppliance.length == 0 && ArrayFilterUstensil.length == 0) {
     DisplayRecipes(recipes);
   }
@@ -492,13 +494,13 @@ function researchrecipes() {
     DisplayRecipes(ArrayRecipeAppliance);
   }
   else if (ArrayFilterAppliance.length == 0 && ArrayFilterUstensil.length == 0 && ArrayFilterIngredient.length > 0) {
-    DisplayRecipes(ArrayFilterRecipeIngredient);
+    DisplayRecipes(ArrayRecipeIngredient);
   }
   else if (ArrayFilterAppliance.length == 0 && ArrayFilterIngredient.length == 0 && ArrayFilterUstensil.length > 0) {
-    DisplayRecipes(ArrayFilterRecipeUstensil);
+    DisplayRecipes(ArrayRecipeUstensil);
   }
   else {
-    DisplayRecipes(ArrayFilterRecipe);
+    DisplayRecipes(ArrayRecipe);
   }
   ArrayRecipeIngredient = [];
   ArrayRecipeAppliance = [];
