@@ -186,9 +186,9 @@ function researchIngredient() {
   ArrayIngredient = [];
   var inputIngredient = document.getElementById("InputIngredient");
   var valueIngredient = inputIngredient.value.toLowerCase();
-  for(var i=0; i<recipes.length; i++) {
-    for(var j=0; j < recipes[i].ingredients.length; j++) {
-      var ListIngredients = recipes[i].ingredients[j].ingredient;
+  for(var n=0; n<recipes.length; n++) {
+    for(var m=0; m < recipes[n].ingredients.length; m++) {
+      var ListIngredients = recipes[n].ingredients[m].ingredient;
       replacecreme = ListIngredients.replace("Crème fraiche", "Crème fraîche");
       replaceLait = replacecreme.replace("Lait de Coco", "Lait de coco");
       replaceCoulis = replaceLait.replace("Coulis de tomate", "Coulis de tomates");
@@ -203,24 +203,24 @@ function researchIngredient() {
   function increment() {
     j++;
   }
-  for(var i=0; i<FilterIngredient.length; i++) {
-    if (FilterIngredient[i].toLowerCase().includes(valueIngredient)) {
-      ArrayIngredient.push(FilterIngredient[i]);
+  for(var o=0; o<FilterIngredient.length; o++) {
+    if (FilterIngredient[o].toLowerCase().includes(valueIngredient)) {
+      ArrayIngredient.push(FilterIngredient[o]);
     }
   }
-  for(var i=0; i<ArrayIngredient.length; i++) {
+  for(var p=0; p<ArrayIngredient.length; p++) {
     increment();
     var insertP = document.createElement("P");
     insertP.classList = "insertP";
-    insertP.id= "PIngredient"+i;
+    insertP.id= "PIngredient"+p;
     if (j==4) {
       j=1;
     }
-    var Ingredient = document.createTextNode (ArrayIngredient[i]);
+    var Ingredient = document.createTextNode (ArrayIngredient[p]);
     var IdIngredient = document.getElementById("Ingredient"+j);
     IdIngredient.appendChild(insertP);
     insertP.appendChild(Ingredient);
-    document.getElementById("PIngredient"+i).onclick = reply_click_Ingredient;
+    document.getElementById("PIngredient"+p).onclick = reply_click_Ingredient;
   }
 }
 
@@ -239,8 +239,8 @@ function researchAppliance() {
   ArrayAppliance = [];
   var inputAppliance = document.getElementById("InputAppliance");
   var valueAppliance = inputAppliance.value.toLowerCase();
-  for(var i=0; i<recipes.length; i++) {
-    var casserole = recipes[i].appliance;
+  for(var n=0; n<recipes.length; n++) {
+    var casserole = recipes[n].appliance;
     replacecasserole = casserole.replace("Casserolle", "Casserole");
     replacecasserole1 = replacecasserole.replace("Casserole.", "Casserole");
     ListAppliance.push(replacecasserole1);
@@ -252,24 +252,24 @@ function researchAppliance() {
   function increment() {
     j++;
   }
-  for(var i=0; i<FilterAppliance.length; i++) {
-    if (FilterAppliance[i].toLowerCase().includes(valueAppliance)) {
-      ArrayAppliance.push(FilterAppliance[i]);
+  for(var m=0; m<FilterAppliance.length; m++) {
+    if (FilterAppliance[m].toLowerCase().includes(valueAppliance)) {
+      ArrayAppliance.push(FilterAppliance[m]);
     }
   }
-  for(var i=0; i<ArrayAppliance.length; i++) {
+  for(var o=0; o<ArrayAppliance.length; o++) {
     increment();
     var insertP = document.createElement("P");
     insertP.classList = "insertP";
-    insertP.id= "P"+i;
+    insertP.id= "P"+o;
     if (j==4) {
       j=1;
     }
-    var Appliance = document.createTextNode (ArrayAppliance[i]);
+    var Appliance = document.createTextNode (ArrayAppliance[o]);
     var IdAppliance = document.getElementById("Appliance"+j);
     IdAppliance.appendChild(insertP);
     insertP.appendChild(Appliance);
-    document.getElementById("P"+i).onclick = reply_click_Appliance;
+    document.getElementById("P"+o).onclick = reply_click_Appliance;
   }
 }
 
@@ -288,9 +288,9 @@ function researchUstensil() {
   ArrayUstensil = [];
   var inputUstensil = document.getElementById("InputUstensil");
   var valueUstensil = inputUstensil.value.toLowerCase();
-  for(var i=0; i<recipes.length; i++) {
-    for(var j=0; j<recipes[i].ustensils.length; j++) {
-      var ustensil = recipes[i].ustensils[j].toLowerCase();
+  for(var m=0; m<recipes.length; m++) {
+    for(var n=0; n<recipes[m].ustensils.length; n++) {
+      var ustensil = recipes[m].ustensils[n].toLowerCase();
       var ustensiluppercase = ustensil.replace(/(é\w{0})|(^\w{1})|(\s+\w{1})/g, lettre => lettre.toUpperCase());
       ListUstensil.push(ustensiluppercase);
     }
@@ -302,24 +302,24 @@ function researchUstensil() {
   function increment() {
     j++;
   }
-  for(var i=0; i<FilterUstensil.length; i++) {
-    if (FilterUstensil[i].toLowerCase().includes(valueUstensil)) {
-      ArrayUstensil.push(FilterUstensil[i]);
+  for(var o=0; o<FilterUstensil.length; o++) {
+    if (FilterUstensil[o].toLowerCase().includes(valueUstensil)) {
+      ArrayUstensil.push(FilterUstensil[o]);
     }
   }
-  for(var i=0; i<ArrayUstensil.length; i++) {
+  for(var p=0; p<ArrayUstensil.length; p++) {
     increment();
     var insertP = document.createElement("P");
     insertP.classList = "insertP";
-    insertP.id= "PUstensil"+i;
+    insertP.id= "PUstensil"+p;
     if (j==4) {
       j=1;
     }
-    var Ustensil = document.createTextNode (ArrayUstensil[i]);
+    var Ustensil = document.createTextNode (ArrayUstensil[p]);
     var IdUstensil = document.getElementById("Ustensil"+j);
     IdUstensil.appendChild(insertP);
     insertP.appendChild(Ustensil);
-    document.getElementById("PUstensil"+i).onclick = reply_click_Ustensil;
+    document.getElementById("PUstensil"+p).onclick = reply_click_Ustensil;
   }
 }
 
@@ -356,9 +356,9 @@ var reply_click_Ingredient = function() {
     ArrayFilterIngredient.push(insertTextIngredient.innerHTML.toLowerCase());
     filterbox.appendChild(insertFilterIngredient);
     var IdCrossIngredient = document.getElementById("crossIngredient" + l);
-    var IdFilterIngredient = document.getElementById("insertfilterIngredient" + l);
+    var IdFilterIngredients = document.getElementById("insertfilterIngredient" + l);
     IdCrossIngredient.addEventListener("click", function() {
-      IdFilterIngredient.style.display = "none";
+      IdFilterIngredients.style.display = "none";
       var IndexArrayFilterIngredient = ArrayFilterIngredient.indexOf(insertTextIngredient.innerHTML.toLowerCase());
       ArrayFilterIngredient.splice(IndexArrayFilterIngredient, 1);
       researchrecipes();
@@ -368,7 +368,7 @@ var reply_click_Ingredient = function() {
   blue.style.display = "flex";
   resblue.style.display = "none";
   researchrecipes();
-}
+};
 
 var reply_click_Ustensil = function() {
   filterline.style.display = "flex";
@@ -391,9 +391,9 @@ var reply_click_Ustensil = function() {
     ArrayFilterUstensil.push(insertTextUstensil.innerHTML.toLowerCase());
     filterbox.appendChild(insertfilterUstensil);
     var IdCrossUstensil = document.getElementById("crossUstensil" + m);
-    var IdFilterUstensil = document.getElementById("insertfilterUstensil" + m);
+    var IdFilterUstensils = document.getElementById("insertfilterUstensil" + m);
     IdCrossUstensil.addEventListener("click", function() {
-      IdFilterUstensil.style.display = "none";
+      IdFilterUstensils.style.display = "none";
       var IndexArrayFilterUstensil = ArrayFilterUstensil.indexOf(insertTextUstensil.innerHTML.toLowerCase());
       ArrayFilterUstensil.splice(IndexArrayFilterUstensil, 1);
       researchrecipes();
@@ -403,7 +403,7 @@ var reply_click_Ustensil = function() {
   red.style.display = "flex";
   resred.style.display = "none";
   researchrecipes();
-}
+};
 
 var reply_click_Appliance = function() {
   filterline.style.display = "flex";
@@ -426,9 +426,9 @@ var reply_click_Appliance = function() {
     ArrayFilterAppliance.push(insertTextAppliance.innerHTML);
     filterbox.appendChild(insertfilterAppliance);
     var IdCrossAppliance = document.getElementById("crossAppliance" + k);
-    var IdFilterAppliance = document.getElementById("insfiltAppliance" + k);
+    var IdFilterAppliances = document.getElementById("insfiltAppliance" + k);
     IdCrossAppliance.addEventListener("click", function() {
-      IdFilterAppliance.style.display = "none";
+      IdFilterAppliances.style.display = "none";
       var IndexArrayFilterAppliance = ArrayFilterAppliance.indexOf(insertTextAppliance.innerHTML);
       ArrayFilterAppliance.splice(IndexArrayFilterAppliance, 1);
       researchrecipes();
@@ -438,7 +438,7 @@ var reply_click_Appliance = function() {
   green.style.display = "flex";
   resgreen.style.display = "none";
   researchrecipes();
-}
+};
 
 function researchrecipes() {
   for(var i=0; i<recipes.length; i++) {
@@ -462,7 +462,7 @@ function researchrecipes() {
       ArrayRecipeUstensil.push(recipes[i]);
     }
     if(ArrayFilterAppliance.length > 0 && ArrayFilterAppliance.every(CheckAppliance)) {
-      ArrayRecipeAppliance.push(recipes[i])
+      ArrayRecipeAppliance.push(recipes[i]);
     }
   }
   function CheckIngredient(Ingredient) {
