@@ -291,7 +291,7 @@ function researchUstensil() {
   for(var m=0; m<recipes.length; m++) {
     for(var n=0; n<recipes[m].ustensils.length; n++) {
       var ustensil = recipes[m].ustensils[n].toLowerCase();
-      var ustensiluppercase = ustensil.replace(/(é\w{0})|(^\w{1})|(\s+\w{1})/g, lettre => lettre.toUpperCase());
+      var ustensiluppercase = ustensil.replace(/(é\w{0})|(^\w{1})|(\s+\w{1})/g, function(lettre) {lettre.toUpperCase()});
       ListUstensil.push(ustensiluppercase);
     }
   }
